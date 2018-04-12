@@ -3,27 +3,51 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose')
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+// 连接数据库
+mongoose.connect('mongodb://localhost/WebStore', err=>{
+    if(err)
+        console.log("数据库连接失败，可能是服务未开启！");
+    else
+        console.log("数据库连接成功！");
+});
+
+var home = require('./routes/home');
+var user = require('./routes/user');
+var secretary = require('./routes/secretary');
+var admin = require('./routes/admin');
+var api = require('./routes/api');
 
 var app = express();
+
+app.disable('x-powered-by');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views/page'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// 日志
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({
+  resave: true,
+  saveUninitialized: false,
+  secret: 'freetes'
+}))
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use('/', home);
+app.use('/users', user);
+app.use('/secretary', secretary);
+app.use('/admin', admin)
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
