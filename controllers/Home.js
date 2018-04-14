@@ -96,6 +96,7 @@ const Home = {
       else{
         Models.UserModel({
           id: req.body.id,
+          name: req.body.name,
           password: req.body.password,
           level: 0
         }).save(result=>{

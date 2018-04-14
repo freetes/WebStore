@@ -1,18 +1,18 @@
 //- 普通用户
 
 body
-  nav.navbar.navbar-default
+  nav.navbar.navbar-default(style="margin-bottom: 0px; background-color: white")
     .container-fluid
       .container
         .navbar-header
-          span.navbar-brand 绿铺
-          span.navbar-text 发现更健康的美食
+          span.navbar-brand(style="font-size: 35px") 绿铺
+          span.navbar-brand 发现更健康的美食
           button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#userNav', aria-expanded='false')
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
             span.icon-bar
-        .collapse.navbar-collapse#userNav
+        .collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
             -if(user == undefined)
               li 
@@ -20,13 +20,47 @@ body
               li 
                 a.btn(href="/signin") 注册
             -else
-              li
+              li.text-center
                 span.navbar-text 欢迎您，#{user.name}
+
               li 
                 a.btn(href="/signin") 退出登录
 
+  nav.navbar.navbar-default(style="background-color: white")
+    .container-fluid
+      .container
+        .collapse.navbar-collapse#userNav
+          ul.nav.navbar-nav
+            li.active
+              a(href='#') 首页
+            li
+              a(href='#') 全部商品
+            -if(user != undefined)
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                  | 我的绿铺
+                  span.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#') 信息管理
+                  li
+                    a(href='#') 购物车
+                  li
+                    a(href='#') 我的订单
+
+          form.navbar-form.navbar-right
+            .form-group.has-feedback
+              input.form-control(type='text', placeholder='搜索商品')
+              span.glyphicon.glyphicon-search.form-control-feedback(aria-hidden="true")
+
   .container
+    //- 轮播图
     .row
-      .col-md-9.col-md-push-3.col-xs-12
-        //- 首页
-        p #{user==undefined?'No user':user.name}
+      .col-md-12.col-xs-12
+        p 这里是分类和轮播图
+    //- 热门商品
+    hr
+    .row
+      .col-md-12.col-xs-12
+        
+

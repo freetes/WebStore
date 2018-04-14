@@ -20,6 +20,8 @@ $(".signupBtn").click(function(e){
   
   if( $("#signupDiv .userIdInput").val() == '')
     return $("#signupDiv .text-danger").text('账号不能为空！')
+  if( $("#signupDiv .userNameInput").val() == '')
+    return $("#signupDiv .text-danger").text('用户昵称不能为空！')
   if( $("#signupDiv .userPasswordInput").val() == '' || $("#signupDiv .userPasswordAgainInput").val() == '' )
     return $("#signupDiv .text-danger").text('密码不能为空！')
   if( $("#signupDiv .userVerifyCodeInput").val() == '')

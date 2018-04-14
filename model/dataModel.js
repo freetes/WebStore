@@ -18,7 +18,8 @@ const ItemSchema = new Schema({
   storehouse: String,
   picture: String,
   introduction: String,
-  tags: Array
+  tags: Array,
+  isHot: Boolean,
 });
 
 // 反馈消息模式
