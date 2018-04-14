@@ -6,49 +6,33 @@ const Home = {
   // GET /
   index: (req, res)=>{
     if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect(303, '/signin');
-    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      // normal user
-      if(user.level == 0){
-        CtrlDB.getAllInfoForUser(req.session.userid).then(info=>{
-          return res.render('index',{
-            title: '教学工作量管理系统',
-            user: user,
-            courses: info.courses,
-            pay: info.pay,
-            message: info.message
-          });
-        });
-      }
-      // secretary
-      else if(user.level == 1){
-        CtrlDB.getAllInfoForSecretary(req.session.userid).then(info=>{
-          return res.render('index',{
-            title: '教学工作量管理系统',
-            user: user,
-            users: info.users,
-            pays: info.pays,
-            message: info.message,
-            courses: info.courses
-          });
-        });
-      }
-      // admin
-      else{
-        CtrlDB.getAllInfoForAdmin(req.session.userid).then(info=>{
-          return res.render('index',{
-            title: '系统管理员主页',
-            user: user,
-            users: info.users,
-            courses: info.courses,
-            pays: info.pays,
-            message: info.message,
-            feedback: info.feedback,
-            signinLog: info.signinLog
-          });
-        });
-      }
-    })
+      return res.render('index', {
+        title: '绿铺-发现更健康的美食'        
+      })
+    else{
+      Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+        // normal user
+        if(user.level != 2){
+          CtrlDB.getAllItemInfo().then(info=>{
+            return res.render('index', {
+              title: '绿铺-发现更健康的美食',
+              user,
+              items: info.items
+            })
+          })        }
+        // admin
+        else{
+          CtrlDB.getALlInfo().then(info=>{
+            return res.render('index', {
+              title: '绿铺-发现更健康的美食',
+              user,
+              users: info.users,
+              items: info.items
+            })
+          })
+        }
+      })
+    }
   },
 
   // GET /signin
@@ -56,7 +40,7 @@ const Home = {
     req.session.userid = null;
     buildVerifyCode(req)
     res.render('signin', {
-      title: '教师工作量管理系统',
+      title: '绿铺-发现更健康的美食',
       verifyCodeExpression: req.session.verifyExpression
     });
   },
@@ -66,89 +50,68 @@ const Home = {
     if(req.body.verifyCode != req.session.verifyResult){
       buildVerifyCode(req)
       return res.render('signin',{
-        title: '教师工作量管理系统',
+        title: '绿铺-发现更健康的美食',
         verifyCodeExpression: req.session.verifyExpression,
         message: '验证码错误，请重新输入！'
       });
     }
-    Models.UserModel.find({'id': req.body.id}, (err, user)=>{
-      if(user.length == 0){
-        Models.SigninLogModel({
-          id: req.body.id,
-          name: '',
-          ip: getIP(req),
-          date: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
-          result: '登录失败，账号不存在！'
-        }).save()
+    Models.UserModel.findOne({'id': req.body.id}, (err, user)=>{
+      if(user == null){
         return res.render('signin',{
-          title: '教师工作量管理系统',
+          title: '绿铺-发现更健康的美食',
           verifyCodeExpression: req.session.verifyExpression,
           message: '账号不存在，请重新输入！'
         });
       }
-      if(!user[0].isWorking){
-        Models.SigninLogModel({
-          id: user[0].id,
-          name: user[0].name,
-          ip: getIP(req),
-          date: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
-          result: '登录失败，账号被注销！'
-        }).save()
+      if(user.password !== req.body.password){
         return res.render('signin',{
-          title: '教师工作量管理系统',
-          verifyCodeExpression: req.session.verifyExpression,
-          message: '账号已被注销！'
-        });
-      }
-      if(user[0].password !== req.body.password){
-        Models.SigninLogModel({
-          id: user[0].id,
-          name: user[0].name,
-          ip: getIP(req),
-          date: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
-          result: '登录失败，密码错误！'
-        }).save()
-        return res.render('signin',{
-          title: '教师工作量管理系统',
+          title: '绿铺-发现更健康的美食',
           verifyCodeExpression: req.session.verifyExpression,
           message: '密码错误，请重新输入！'
         });
       }
 
-      Models.SigninLogModel({
-        id: user[0].id,
-        name: user[0].name,
-        ip: getIP(req),
-        date: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
-        result: '登录成功！'
-      }).save()
-      req.session.userid = user[0].id;
+      req.session.userid = user.id;
       delete req.session.verifyExpression
       delete req.session.verifyResult
-      return res.redirect(303, '/');
+      return res.redirect(302, '/');
     });
   },
 
-  // GET /exportdoc
-  exportDoc: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect(303, '/signin');
-    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      // normal user
-      if(user.level == 0){
-        return res.redirect(303, '/signin');
-      }
-      CtrlDB.getInfo2Export(req.session.userid, req.query.y + '-' + req.query.m).then(info=>{
-        return res.render('exportdoc',{
-          title: 'Excel导出页面',
-          users: info.users,
-          pays: info.pays,
-          year: req.query.y,
-          month: req.query.m,
+  // POST /signup
+  signupPost: (req, res)=>{
+    if(req.body.verifyCode != req.session.verifyResult){
+      buildVerifyCode(req)
+      return res.render('signin',{
+        title: '绿铺-发现更健康的美食',
+        verifyCodeExpression: req.session.verifyExpression,
+        message: '验证码错误，请重新输入！'
+      });
+    }
+    Models.UserModel.find({'id': req.body.id}, (err, user)=>{
+      if(user.length != 0)
+        return res.json({
+          message: '用户名已被注册！'
+        });
+      else{
+        Models.UserModel({
+          id: req.body.id,
+          password: req.body.password,
+          level: 0
+        }).save(result=>{
+          return res.json({
+            message: '注册成功！'
+          })
         })
-      })
+
+        req.session.userid = req.body.id
+        delete req.session.verifyExpression
+        delete req.session.verifyResult
+        return res.redirect(302, '/');
+      }
     })
   },
+
 };
 
 // 生成验证码

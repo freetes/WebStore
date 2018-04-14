@@ -9,7 +9,6 @@ const Admin = {
       name: req.body.name,
       password: req.body.password,
       level: req.body.level,
-      isWorking: true
     }).save((err, result)=>{
       if(err) return res.json(false);
       return res.json(true);
