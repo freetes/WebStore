@@ -3,8 +3,35 @@
 .container
   //- 轮播图
   .row
-    .col-md-12.col-xs-12
-      p 这里是分类和轮播图
+    .col-md-2
+      p 这里是分类
+    .col-md-10.col-xs-12
+      #myCarousel.carousel.slide
+        //- 轮播（Carousel）指标
+        ol.carousel-indicators
+          li.active(data-target='#myCarousel', data-slide-to='0')
+          li(data-target='#myCarousel', data-slide-to='1')
+          li(data-target='#myCarousel', data-slide-to='2')
+          li(data-target='#myCarousel', data-slide-to='3')
+        //-轮播（Carousel）项目
+        .carousel-inner
+          .item.active
+            img(src='/img/1.jpg', alt='First slide')
+          .item
+            img(src='/img/2.jpg', alt='Second slide')
+          .item
+            img(src='/img/3.jpg', alt='Third slide')
+          .item
+            img(src='/img/4.jpg', alt='Fourth slide')
+        //-轮播（Carousel）导航
+        a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+          span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+          span.sr-only Previous
+        a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+          span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+          span.sr-only Next
+        script.
+          $("#myCarousel").carousel('cycle');
   //- 热门商品
   hr
   .row
