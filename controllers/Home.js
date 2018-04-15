@@ -5,10 +5,11 @@ const CtrlDB = require('../model/ctrlDB');
 const Home = {
   // GET /
   index: (req, res)=>{
+    const title = '首页'
     if(req.session.userid == undefined || req.session.userid == null)
       CtrlDB.getAllItemInfo().then(info=>{
         return res.render('index', {
-          title: '绿铺-发现更健康的美食',
+          title,
           items: info.items
         })
       })
@@ -18,7 +19,7 @@ const Home = {
         if(user.level != 2){
           CtrlDB.getAllItemInfo().then(info=>{
             return res.render('index', {
-              title: '绿铺-发现更健康的美食',
+              title,
               user,
               items: info.items
             })
@@ -28,7 +29,7 @@ const Home = {
         else{
           CtrlDB.getALlInfo().then(info=>{
             return res.render('index', {
-              title: '绿铺-发现更健康的美食',
+              title,
               user,
               users: info.users,
               items: info.items
@@ -39,22 +40,50 @@ const Home = {
     }
   },
 
+  // GET /allitem
+  allitem: (req, res)=>{
+    const title = '所有商品'
+    // 未登录
+    if(req.session.userid == undefined || req.session.userid == null)
+      CtrlDB.getAllItemInfo().then(info=>{
+        return res.render('allitem', {
+          title,
+          items: info.items
+        })
+      })
+    // 已登录
+    else
+      Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+        // normal user
+        if(user.level != 2)
+          CtrlDB.getAllItemInfo().then(info=>{
+            return res.render('allitem', {
+              title,
+              user,
+              items: info.items
+            })
+          })
+      })
+  },
+
   // GET /signin
   signinGet: (req, res)=>{
+    const title = '登录'
     req.session.userid = null;
     buildVerifyCode(req)
     res.render('signin', {
-      title: '绿铺-发现更健康的美食',
+      title,
       verifyCodeExpression: req.session.verifyExpression
     });
   },
 
   // POST /signin
   signinPost: (req, res)=>{
+    const title = '登录'
     if(req.body.verifyCode != req.session.verifyResult){
       buildVerifyCode(req)
       return res.render('signin',{
-        title: '绿铺-发现更健康的美食',
+        title,
         verifyCodeExpression: req.session.verifyExpression,
         message: '验证码错误，请重新输入！'
       });
@@ -62,14 +91,14 @@ const Home = {
     Models.UserModel.findOne({'id': req.body.id}, (err, user)=>{
       if(user == null){
         return res.render('signin',{
-          title: '绿铺-发现更健康的美食',
+          title,
           verifyCodeExpression: req.session.verifyExpression,
           message: '账号不存在，请重新输入！'
         });
       }
       if(user.password !== req.body.password){
         return res.render('signin',{
-          title: '绿铺-发现更健康的美食',
+          title,
           verifyCodeExpression: req.session.verifyExpression,
           message: '密码错误，请重新输入！'
         });
@@ -84,10 +113,11 @@ const Home = {
 
   // POST /signup
   signupPost: (req, res)=>{
+    const title = '登录'
     if(req.body.verifyCode != req.session.verifyResult){
       buildVerifyCode(req)
       return res.render('signin',{
-        title: '绿铺-发现更健康的美食',
+        title,
         verifyCodeExpression: req.session.verifyExpression,
         message: '验证码错误，请重新输入！'
       });
