@@ -66,6 +66,31 @@ const Home = {
       })
   },
 
+  // GET /item/:id
+  item: (req, res)=>{
+    // 未登录
+    if(req.session.userid == undefined || req.session.userid == null)
+      Models.ItemModel.findOne({}, (err, item)=>{
+        return res.render('item', {
+          title: item.name,
+          item
+        })
+      })
+    // 已登录
+    else
+      Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+        // normal user
+        if(user.level != 2)
+          Models.ItemModel.findOne({}, (err, item)=>{
+            return res.render('item', {
+              title: item.name,
+              user,
+              item
+            })
+          })
+      })
+  },
+
   // GET /signin
   signinGet: (req, res)=>{
     const title = '登录'
