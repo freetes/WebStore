@@ -6,8 +6,11 @@ const Home = {
   // GET /
   index: (req, res)=>{
     if(req.session.userid == undefined || req.session.userid == null)
-      return res.render('index', {
-        title: '绿铺-发现更健康的美食'        
+      CtrlDB.getAllItemInfo().then(info=>{
+        return res.render('index', {
+          title: '绿铺-发现更健康的美食',
+          items: info.items
+        })
       })
     else{
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
@@ -19,7 +22,8 @@ const Home = {
               user,
               items: info.items
             })
-          })        }
+          })
+        }
         // admin
         else{
           CtrlDB.getALlInfo().then(info=>{

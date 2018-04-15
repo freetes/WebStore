@@ -20,6 +20,7 @@ const ItemSchema = new Schema({
   introduction: String,
   tags: Array,
   isHot: Boolean,
+  date: Date
 });
 
 // 反馈消息模式

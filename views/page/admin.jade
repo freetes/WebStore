@@ -26,6 +26,24 @@ body
               
             botton.btn.btn-primary.btn-block(onclick="addUser()") 录入
 
+          .col-md-3
+            h5 新增商品
+            
+            input.form-control.newItemName(type="text", placeholder="名称")
+            input.form-control.newItemPassword(type="text", placeholder="密码")
+            input.form-control.newItemAmount(type="text", placeholder="数目")
+            input.form-control.newItemPrice(type="text", placeholder="价格")
+            input.form-control.newItemIntroduction(type="text", placeholder="介绍")
+            input.form-control.newItemTags(type="text", placeholder="标签")
+
+
+            select.form-control.newItemLevel
+              option(value="0") 普通教职工
+              option(value="1") 教学秘书
+              option(value="2") 系统管理员
+              
+            botton.btn.btn-primary.btn-block(onclick="addItem()") 录入
+
         hr
         .row
           .col-md-4

@@ -62,5 +62,11 @@ body
     hr
     .row
       .col-md-12.col-xs-12
-        
+        h2.text-center 热门商品
+        -each item in items
+          .hotItemDiv.col-md-3.col-xs-12
+            img.img-responsive(src="#{item.picture}", alt="商品图片")
+            span.text-left #{item.name}
+            span.text-right #{item.price}
+
 
