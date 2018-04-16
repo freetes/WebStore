@@ -18,3 +18,21 @@ function addUser(){
     }
   )
 }
+
+function deleteUser(id){
+  $.post('/admin/deleteUser',
+    {
+      id: id
+    },
+    result=>{
+      if(result){
+				$(".alertMessage").text("删除成功！");
+				$("#alertInfoModal").modal();
+			}
+			else{
+				$(".alertMessage").text("出错了！");
+				$("#alertInfoModal").modal();
+			}
+    }
+  )
+}

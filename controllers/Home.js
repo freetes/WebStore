@@ -27,7 +27,7 @@ const Home = {
         }
         // admin
         else{
-          CtrlDB.getALlInfo().then(info=>{
+          CtrlDB.getAllInfo().then(info=>{
             return res.render('index', {
               title,
               user,
@@ -70,10 +70,11 @@ const Home = {
   item: (req, res)=>{
     // 未登录
     if(req.session.userid == undefined || req.session.userid == null)
-      Models.ItemModel.findOne({}, (err, item)=>{
+      Models.ItemModel.findOne({_id: req.params.id}, (err, item)=>{
+        // if(err) return res.render('item')
         return res.render('item', {
-          title: item.name,
-          item
+          title: item.name==undefined?'无结果':item.name,
+          item,
         })
       })
     // 已登录
@@ -81,13 +82,13 @@ const Home = {
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
         // normal user
         if(user.level != 2)
-          Models.ItemModel.findOne({}, (err, item)=>{
+          // Models.ItemModel.findOne({_id: req.query.id}, (err, item)=>{
             return res.render('item', {
               title: item.name,
               user,
               item
             })
-          })
+          // })
       })
   },
 

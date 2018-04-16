@@ -32,7 +32,7 @@ nav.navbar.navbar-default(style="background-color: white")
             a(href='/') 首页
           li#allitemLi
             a(href='/allitem') 全部商品
-          -if(user != undefined)
+          -if(user != undefined && user.level == 0)
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                 | 我的绿铺
@@ -44,7 +44,18 @@ nav.navbar.navbar-default(style="background-color: white")
                   a(href='#') 购物车
                 li
                   a(href='#') 我的订单
-
+          -else if(user != undefined && user.level == 1)
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                | 我的绿铺
+                span.caret
+              ul.dropdown-menu
+                li
+                  a(href='#') 信息管理
+                li
+                  a(href='#') 发布商品
+                li
+                  a(href='#') 我的发布
         form.navbar-form.navbar-right
           .form-group.has-feedback
             input.form-control(type='text', placeholder='搜索商品')

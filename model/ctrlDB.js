@@ -7,7 +7,7 @@ const ctrlDB = {
       items: await Models.ItemModel.find()
     }
   },
-  getALlInfo: async ()=>{
+  getAllInfo: async ()=>{
     return {
       items: await Models.ItemModel.find(),
       users: await Models.UserModel.find({level: { $ne:2}})
