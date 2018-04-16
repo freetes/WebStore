@@ -4,6 +4,13 @@ block content
   body
     include ../../head/nav
     .container
-      p 这里是商品增加页
-      
+      form(action='/owner/additem', method='POST', enctype='multipart/form-data')
+        .form-group
+          label(for='itemName') 商品名称
+          input#itemName.form-control(type='text', name='name', placeholder='商品名称')
+        .form-group
+          label(for='itemPicture', name='pic') 商品图片
+          input#itemPicture(type='file')
+        button.btn.btn-default.updateItemBtn 提交
+
     include ../../head/footer
