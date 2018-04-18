@@ -4,8 +4,6 @@ const Models = require('../model/dataModel');
 const User = {
   // GET /getInfo
   getInfo: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect('/');
     Models.UserModel.findOne({id: req.session.userid}, (err, user)=>{
       return res.render('userinfo',{
         user,
@@ -15,8 +13,6 @@ const User = {
   },
   // POST /getInfo
   changeInfo: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect('/');
     Models.UserModel.findOneAndUpdate(
       {id: req.session.userid},
       {
@@ -30,24 +26,48 @@ const User = {
   },
   // GET /shopcar
   shopcar: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect('/');
     Models.UserModel.findOne({id: req.session.userid}, (err, user)=>{
-      return res.render('user/shopcar',{
-        user,
-        title: '购物车'
-      });
+      Models.ShopCarModel.findOne({id: user.id}, (err, shopcar)=>{
+        return res.render('user/shopcar',{
+          user,
+          items: shopcar.items,
+          title: '购物车'
+        });
+      })
     })
   },
   // GET /order
   getOrder: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect('/');
     Models.UserModel.findOne({id: req.session.userid}, (err, user)=>{
       return res.render('user/order',{
         user,
         title: '订单管理'
       });
+    })
+  },
+  // GET /order
+  newOrder: (req, res)=>{
+    Models.UserModel.findOne({id: req.session.userid}, (err, user)=>{
+      return res.render('user/order',{
+        user,
+        title: '订单管理'
+      });
+    })
+  },
+  // POST /addItemToShopCar
+  addItem: (req, res)=>{
+    Models.ShopCarModel.findOne({id: req.session.userid}, (err, shopcar)=>{
+      if(err) return res.json(false)
+      console.log(req.body.item)
+      shopcar.items.push(req.body.item)
+      // Models.ShopCarModel.findOneAndUpdate(
+      //   {id: req.session.userid}, 
+      //   {items: shopcar.items}, 
+      //   (err, result)=>{
+      //     if(err) return res.json(false)
+      //     return res.json(true)
+      //   }
+      // )
     })
   },
 };

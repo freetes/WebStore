@@ -7,8 +7,8 @@ $(".signinBtn").click(function(e){
     return $("#signinDiv .text-danger").text('账号不能为空！')
   if( $("#signinDiv .userPasswordInput").val() == '')
     return $("#signinDiv .text-danger").text('密码不能为空！')
-  if( $("#signinDiv .userVerifyCodeInput").val() == '')
-    return $("#signinDiv .text-danger").text('验证码不能为空！')
+  // if( $("#signinDiv .userVerifyCodeInput").val() == '')
+  //   return $("#signinDiv .text-danger").text('验证码不能为空！')
 
   // 提交请求
   $(".signinForm").submit()
@@ -24,8 +24,8 @@ $(".signupBtn").click(function(e){
     return $("#signupDiv .text-danger").text('用户昵称不能为空！')
   if( $("#signupDiv .userPasswordInput").val() == '' || $("#signupDiv .userPasswordAgainInput").val() == '' )
     return $("#signupDiv .text-danger").text('密码不能为空！')
-  if( $("#signupDiv .userVerifyCodeInput").val() == '')
-    return $("#signupDiv .text-danger").text('验证码不能为空！')
+  // if( $("#signupDiv .userVerifyCodeInput").val() == '')
+  //   return $("#signupDiv .text-danger").text('验证码不能为空！')
   if( $("#signupDiv .userPasswordInput").val() != $("#signupDiv .userPasswordAgainInput").val() )
     return $("#signupDiv .text-danger").text('两次密码不相同！')
 

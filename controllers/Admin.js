@@ -11,34 +11,22 @@ const Admin = {
       level: req.body.level,
     }).save((err, result)=>{
       if(err) return res.json(false);
-      return res.json(true);
+      if(req.body.level == 0)
+        Models.ShopCarModel({
+          id: req.body.id,
+          items: []
+        }).save(()=>{
+          return res.json(true);
+        })
     })
   },
   // POST /deletePay
   deletePay: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.json(false);
-    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      if(user.level == 0) return res.json(false);
-      else
-        Models.PayModel.findByIdAndRemove({_id: req.body.id}, (err, result)=>{
-            if(err) return res.json(false)
-            return res.json(true)
-        })
-    })
+
   },
   // POST /deleteNotice
   deleteNotice: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.json(false);
-    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      if(user.level == 0) return res.json(false);
-      else
-        Models.NoticeModel.findByIdAndRemove({_id: req.body.id}, (err, result)=>{
-            if(err) return res.json(false)
-            return res.json(true)
-        })
-    })
+
   },
   // POST /deleteUser
   deleteUser: (req, res)=>{

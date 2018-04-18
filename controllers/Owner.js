@@ -6,8 +6,6 @@ const util = require('util')
 const Owner = {
   // GET /owner/additem
   addItem: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect(302, '/');
     Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
       if(user.level == 1)
         return res.render('owner/additem',{
@@ -31,8 +29,6 @@ const Owner = {
   },
   // GET /owner/myadd
   getAdd: (req, res)=>{
-    if(req.session.userid == undefined || req.session.userid == null)
-      return res.redirect(302, '/');
     Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
       if(user.level == 1)
         Models.ItemModel.find({owner: user.id}, (err, items)=>{

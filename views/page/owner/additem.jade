@@ -23,9 +23,13 @@ block content
         .form-group
           label 标签
           input.form-control(type='text', name='tags', placeholder='标签')
-        .form-group
+        .form-group.hidden
           label 日期
-          input(type='date', name='date')
+          input#dateInput(type='datetime', name='date')
+        script.
+          setInterval(function(){
+            $('#dateInput').val(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
+          }, 1000)
         .form-group
           label 图片
           input#itemPicture(type='file', name='picture')

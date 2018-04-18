@@ -20,23 +20,33 @@ const ItemSchema = new Schema({
   introduction: String,
   tags: Array,
   isHot: Boolean,
-  date: Date
+  date: String
 });
 
-// 反馈消息模式
-const FeedbackSchema = new Schema({
-  id: String,
-  name: String,
+// 订单数据模式
+const OrderSchema = new Schema({
+  buyer: String,
+  seller: String,
+  item: String,
+  amount: Number,
+  price: Number,
+  address: String,
   date: String,
-  message: String,
-  ip: String
+  status: Number
+});
+
+// 购物车数据模式
+const ShopCarSchema = new Schema({
+  id: String,
+  items: Array
 });
 
 //数据模型
 const Models = {
   UserModel: mongoose.model('User', UserSchema),
   ItemModel: mongoose.model('Item', ItemSchema),
-  FeedbackModel: mongoose.model('Feedback', FeedbackSchema),
+  OrderModel: mongoose.model('Order', OrderSchema),
+  ShopCarModel: mongoose.model('ShopCar', ShopCarSchema),
 };
 
 module.exports = Models;
