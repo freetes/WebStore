@@ -5,4 +5,6 @@ router.get('/additem', owner.addItem);
 
 router.post('/additem', owner.addItemPost);
 
+router.get('/myadd', owner.getAdd);
+
 module.exports = router;

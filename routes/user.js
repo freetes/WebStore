@@ -3,12 +3,12 @@ const user = require('../controllers/User');
 
 /* GET users listing. */
 
-router.post('/newPay', user.newPay);
+router.get('/info', user.getInfo);
 
-router.post('/changePay', user.changePay);
+router.post('/info', user.changeInfo);
 
-// router.post('/checkPay', user.checkPay);
+router.get('/shopcar', user.shopcar);
 
-router.post('/newClass', user.newClass);
+router.get('/order', user.getOrder);
 
 module.exports = router;

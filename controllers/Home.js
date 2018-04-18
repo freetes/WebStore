@@ -82,13 +82,13 @@ const Home = {
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
         // normal user
         if(user.level != 2)
-          // Models.ItemModel.findOne({_id: req.query.id}, (err, item)=>{
+          Models.ItemModel.findOne({_id: req.params.id}, (err, item)=>{
             return res.render('item', {
-              title: item.name,
+              title: item.name==undefined?'无结果':item.name,
               user,
               item
             })
-          // })
+          })
       })
   },
 

@@ -1,0 +1,16 @@
+extends ../layout
+//- 主页
+block content
+  body
+    include ../head/nav
+    .container
+      form(action="/user/info", method="post")
+        .form-group
+          label 昵称
+          input.form-control(type='text', name='name', value='#{user.name}')
+        .form-group
+          label 密码
+          input.form-control(type='text', name='password', value='#{user.password}')
+        button.btn.btn-default.updateItemBtn 提交
+        
+    include ../head/footer

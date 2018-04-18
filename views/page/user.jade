@@ -7,13 +7,11 @@
       p 这里是分类
     .col-md-10.col-xs-12
       #myCarousel.carousel.slide
-        //- 轮播（Carousel）指标
         ol.carousel-indicators
           li.active(data-target='#myCarousel', data-slide-to='0')
           li(data-target='#myCarousel', data-slide-to='1')
           li(data-target='#myCarousel', data-slide-to='2')
           li(data-target='#myCarousel', data-slide-to='3')
-        //-轮播（Carousel）项目
         .carousel-inner
           .item.active
             img(src='/img/1.jpg', alt='First slide')
@@ -23,7 +21,6 @@
             img(src='/img/3.jpg', alt='Third slide')
           .item
             img(src='/img/4.jpg', alt='Fourth slide')
-        //-轮播（Carousel）导航
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
           span.sr-only Previous
@@ -36,11 +33,14 @@
   hr
   .row
     .col-md-12.col-xs-12
-      h2.text-center 热门商品
+      h2.text-center(style="margin-top:0") 热门商品
       -each item in items
-        .hotItemDiv.col-md-3.col-xs-12
-          img.img-responsive(src="#{item.picture}", alt="商品图片")
-          span.text-left #{item.name}
-          span.text-right #{item.price}
+        .col-md-3.col-xs-12
+          .panel.panel-default
+            .panel-body
+              img.img-responsive(src="#{item.picture}", alt="商品图片")
+              span.text-left #{item.name}
+              span.text-right #{item.price}
+              a(href="/item/#{item._id}") 查看详细
 
 

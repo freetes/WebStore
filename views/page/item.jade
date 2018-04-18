@@ -5,6 +5,10 @@ block content
     include ../head/nav
     .container
       p 这里是商品详情页
-      p #{item}
-
+      .col-md-4
+        img.img-responsive(src="#{item.picture}")
+      .col-md-8
+        h2 #{item.name}
+        p 价格#{item.price}
+        button.btn.btn-default 购买
     include ../head/footer

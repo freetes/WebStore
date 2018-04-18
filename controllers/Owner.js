@@ -1,8 +1,8 @@
 const Models = require('../model/dataModel');
 const CtrlDB = require('../model/ctrlDB');
-const formidable = require('formidable');
+const form = require('../formidable');
 const util = require('util')
-// 秘书专用
+// 卖家
 const Owner = {
   // GET /owner/additem
   addItem: (req, res)=>{
@@ -11,38 +11,38 @@ const Owner = {
     Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
       if(user.level == 1)
         return res.render('owner/additem',{
-          title: '新增'
+          user,
+          title: '发布商品'
         });
     })
   },
+  // POST /owner/additem
   addItemPost: (req, res)=>{
-    var form = new formidable.IncomingForm();
-    form.encoding='utf-8';
-    form.keepExtensions=false;
     form.parse(req, function(err, fields, files) {
-      res.writeHead(200, {'content-type': 'text/plain'});
-      res.write('received upload:\n\n');
-      res.end(util.inspect({fields: fields, files: files}));
+      let item = fields
+      item.tags = item.tags.split(' ')
+      item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
+      item.owner = req.session.userid
+      item.isHot = false
+      Models.ItemModel(item).save((err, result)=>{
+        return res.redirect(302, '/owner/additem');
+      })
     });
-    
-    
-    // if(req.session.userid == undefined || req.session.userid == null)
-    //   return res.render('owner/additem', {
-    //     title: '新增',
-    //     message: '新增失败！'
-    //   })
-    // Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-    //   if(user.level == 1){
-    //     form.parse(req, (err, fields, file)=>{
-    //       console.log(fields)
-    //       console.log(file)
-    //       return res.render('owner/additem', {
-    //         title: '新增',
-    //         message: '新增成功！'
-    //       })
-    //     })
-    //   }
-    // })
+  },
+  // GET /owner/myadd
+  getAdd: (req, res)=>{
+    if(req.session.userid == undefined || req.session.userid == null)
+      return res.redirect(302, '/');
+    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+      if(user.level == 1)
+        Models.ItemModel.find({owner: user.id}, (err, items)=>{
+          return res.render('owner/myadd',{
+            user,
+            title: '发布管理',
+            items
+          });
+        })
+    })
   },
 };
 

@@ -1,0 +1,17 @@
+extends ../../layout
+//- 主页
+block content
+  body
+    include ../../head/nav
+    .container
+      p 发布了 #{items.length} 个商品
+      -each item in items
+        .col-md-3.col-xs-12
+          .panel.panel-default
+            .panel-body
+              img.img-responsive(src="#{item.picture}", alt="商品图片")
+              span.text-left #{item.name}
+              span.text-right #{item.price}
+              a(href="/item/#{item._id}") 查看详细
+
+    include ../../head/footer
