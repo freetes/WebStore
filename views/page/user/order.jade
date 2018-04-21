@@ -1,8 +1,80 @@
 extends ../../layout
 //- 主页
 block content
+  link(rel="stylesheet", href="/css/normal.css")
+
   body
     include ../../head/nav
     .container
-      p 这里是订单管理
+      .row
+        .col-md-10
+          -if(orders.length != 0)
+            blockquote 
+              p 一共#{orders.length}个商品
+            each i in orders
+              .col-md-12.col-xs-12
+                .panel.panel-default
+                  .panel-body
+                    .col-md-2
+                      img.img-responsive
+                    .col-md-10
+                      h3
+                        strong.name
+                      .col-md-6
+                        p.text-muted 卖家：
+                          span.seller
+                        p.text-muted 数量：
+                          span #{i.amount}
+                        p.text-muted 成交日期：
+                          span #{i.date}
+                      .col-md-6
+                        p.text-muted 收货地址：
+                          span #{i.address}
+                        p.text-muted 联系电话：
+                          span #{i.mobile}
+                        p.text-muted 总价：
+                          span.text-danger ￥#{i.price}
+                    button.hidden.btn.btn-primary.btn-getinfo(onclick="getAllInfo('#{i.item}', '#{i.seller}', this)") 获取信息
+          -else
+            p 你的购物车空无一物，快去逛逛吧
+        .col-md-2  
+          blockquote  
+            p 为您推荐
+          -const x = parseInt(Math.random()*items.length)
+          -let y
+          -do{
+            -y = parseInt(Math.random()*items.length)
+          -}while(x == y)
+          .col-md-12.col-xs-12
+            a(href="/item?id=#{items[x]._id}", style="text-decoration: none")
+              .panel.panel-default
+                .panel-body
+                  img.img-responsive(src="#{items[x].picture}", alt="商品图片")
+                  p.text-center.text-muted #{items[x].name}
+          .col-md-12.col-xs-12
+            a(href="/item?id=#{items[y]._id}", style="text-decoration: none")
+              .panel.panel-default
+                .panel-body
+                  img.img-responsive(src="#{items[y].picture}", alt="商品图片")
+                  p.text-center.text-muted #{items[y].name}
+
+
+      //- 热门商品
+      br
+      .row
+        .col-md-12.col-xs-12
+          blockquote
+            p 热门商品
+          each item in items
+            .col-md-3.col-xs-12
+              a(href="/item?id=#{item._id}", style="text-decoration: none")
+                .panel.panel-default
+                  .panel-body
+                    img.img-responsive(src="#{item.picture}", alt="商品图片")
+                    h4.text-center.text-muted #{item.name}
+                    h3.text-center.text-danger ￥#{item.price}
+
+
     include ../../head/footer
+    include ../../public/alertInfoModal
+    script(src="/js/ajax.js")

@@ -1,0 +1,18 @@
+extends ../../layout
+//- 主页
+block content
+  link(rel="stylesheet", href="/css/normal.css")
+  body
+    include ../../head/nav
+    .container
+      p 这里是订单管理，有#{orders.length}
+      .table.table-hover
+          
+        each order in orders
+            p item: #{order.item}
+            p buyer: #{order.buyer}
+            p 购买数量：#{order.amount}
+
+    include ../../head/footer
+    include ../../public/alertInfoModal
+    

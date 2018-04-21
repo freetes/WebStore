@@ -66,15 +66,17 @@ const Home = {
       })
   },
 
-  // GET /item/:id
+  // GET /item
   item: (req, res)=>{
     // 未登录
     if(req.session.userid == undefined || req.session.userid == null)
-      Models.ItemModel.findOne({_id: req.params.id}, (err, item)=>{
-        // if(err) return res.render('item')
-        return res.render('item', {
-          title: item.name==undefined?'无结果':item.name,
-          item,
+      Models.ItemModel.findOne({_id: req.query.id}, (err, item)=>{
+        Models.ItemModel.find({}, (err, items)=>{
+          return res.render('item', {
+            title: item.name==undefined?'无结果':item.name,
+            item,
+            items
+          })
         })
       })
     // 已登录
@@ -82,11 +84,49 @@ const Home = {
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
         // normal user
         if(user.level != 2)
-          Models.ItemModel.findOne({_id: req.params.id}, (err, item)=>{
-            return res.render('item', {
-              title: item.name==undefined?'无结果':item.name,
+          Models.ItemModel.findOne({_id: req.query.id}, (err, item)=>{
+            Models.ItemModel.find({}, (err, items)=>{
+              return res.render('item', {
+                title: item.name==undefined?'无结果':item.name,
+                user,
+                item,
+                items
+              })
+            })
+          })
+      })
+  },
+
+  // GET /search
+  search: (req, res)=>{
+    // 搜索结果
+    let result = []
+    // 未登录
+    if(req.session.userid == undefined || req.session.userid == null)
+      Models.ItemModel.find({}, (err, items)=>{
+        for(let item of items)
+          if(item.name.indexOf(req.query.name) > 0)
+            result.push(item)
+        return res.render('search', {
+          title: result.length == 0?'无结果':req.query.name,
+          items,
+          result,
+        })
+      })
+    // 已登录
+    else
+      Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+        // normal user
+        if(user.level != 2)
+          Models.ItemModel.find({}, (err, items)=>{
+            for(let item of items)
+              if(item.name.indexOf(req.query.name) > 0)
+                result.push(item)
+            return res.render('search', {
+              title: result.length == 0?'无结果':req.query.name,
               user,
-              item
+              items,
+              result
             })
           })
       })

@@ -6,7 +6,9 @@ router.get('/', home.index);
 
 router.get('/allitem', home.allitem);
 
-router.get('/item/:id', home.item);
+router.get('/item', home.item);
+
+router.get('/search', home.search);
 
 router.get('/signin', home.signinGet);
 

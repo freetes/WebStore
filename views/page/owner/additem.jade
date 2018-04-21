@@ -1,6 +1,7 @@
 extends ../../layout
 //- 主页
 block content
+  link(rel="stylesheet", href="/css/normal.css")
   body
     include ../../head/nav
     .container
@@ -25,11 +26,9 @@ block content
           input.form-control(type='text', name='tags', placeholder='标签')
         .form-group.hidden
           label 日期
-          input#dateInput(type='datetime', name='date')
+          input#dateInput(type='text', name='date')
         script.
-          setInterval(function(){
-            $('#dateInput').val(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
-          }, 1000)
+          $('#dateInput').val(`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`)
         .form-group
           label 图片
           input#itemPicture(type='file', name='picture')

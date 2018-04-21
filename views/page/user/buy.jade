@@ -1,0 +1,55 @@
+extends ../../layout
+//- 主页
+block content
+  link(rel="stylesheet", href="/css/normal.css")
+
+  body
+    include ../../head/nav
+    .container
+      .panel.panel-default
+        .panel-body
+          .col-md-4
+            img.img-responsive(src="#{item.picture}")
+          .col-md-8
+            h2 #{item.name}
+            p.hidden 卖家：
+              span.ownerText #{item.owner}
+            p 单价：￥
+              span.priceText.text-danger #{item.price}
+            p 数量：
+              input.form-control.amountInput(type="number", name='amount', min='1', max='#{item.amount}', value='1')
+            p 收获地址：
+              input.form-control.addressInput(type='text', name='address')
+            p 联系电话：
+              input.form-control.mobileInput(type='text', name='mobile')
+              
+            button.btn.btn-default(onclick="buy('#{item._id}')") 确定购买
+
+    script.
+      function buy(id){
+        $.post('/user/order',
+          {
+            seller: $(".ownerText").text(),
+            item: id,
+            amount: $(".amountInput").val(),
+            price: $(".priceText").text(),
+            address: $(".addressInput").val(),
+            mobile: $(".mobileInput").val(),
+            date: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`
+          },
+          result=>{
+            if(result){
+              $(".alertMessage").text("添加成功！");
+              $("#alertInfoModal").modal();
+            }
+            else{
+              $(".alertMessage").text("出错了！");
+              $("#alertInfoModal").modal();
+            }
+          }
+        )
+      }
+
+    include ../../head/footer
+    include ../../public/alertInfoModal
+    

@@ -2,8 +2,8 @@ nav.navbar.navbar-default(style="margin-bottom: 0px; background-color: white")
   .container-fluid
     .container
       .navbar-header
-        span.navbar-brand(style="font-size: 35px") 绿铺
-        span.navbar-brand 发现更健康的美食
+        span.navbar-brand(style="font-size: 35px; color: green") 绿铺
+        span.navbar-brand(style="color: green") 发现更健康的食品
         button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#userNav', aria-expanded='false')
           span.sr-only Toggle navigation
           span.icon-bar
@@ -56,19 +56,23 @@ nav.navbar.navbar-default(style="background-color: white")
                   a(href='/owner/additem') 发布商品
                 li
                   a(href='/owner/myadd') 我的发布
-        form.navbar-form.navbar-right
+                li
+                  a(href='/owner/order') 我的订单
+        form.searchForm.navbar-form.navbar-right(action='/search', method="GET")
           .form-group.has-feedback
-            input.form-control(type='text', placeholder='搜索商品')
+            input.form-control(type='text', placeholder='搜索商品', name='name')
             span.glyphicon.glyphicon-search.form-control-feedback(aria-hidden="true")
 
-script(type='text/javascript').
+script.
   $("#userNav ul li").removeClass('active')
   switch(window.location.pathname){
     case '/': {
       $("#homeLi").addClass('active')
+      $("#homeLi a").css({"background-color": 'green', 'color':"white"});
     };break;
     case '/allitem': {
       $("#allitemLi").addClass('active')
+      $("#allitemLi a").css({"background-color": 'green', 'color':"white"});
     };break;
     default:break;
   }

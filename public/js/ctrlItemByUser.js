@@ -1,14 +1,11 @@
 
 function addShopCar(item, seller) {
-  const i = {
-    seller,
-    item,
-    amount: $('.itemAmountInput').val(),
-    price: parseInt($('.itemPrice').text()) * parseInt($('.itemAmountInput').val())
-  }
   $.post('/user/addItemToShopCar',
     {
-      item: i
+      seller,
+      item,
+      price: parseInt($('.itemPrice').text()),
+      date: getNewDate()
     },
     result=>{
       if(result){
@@ -21,22 +18,6 @@ function addShopCar(item, seller) {
 			}
     }
   )
-}
-
-function buyItem(id) {
-
-}
-
-function amountDown(){
-  const amount = parseInt($('.itemAmountInput').val())
-  if(amount > 1)
-    $('.itemAmountInput').val(amount - 1)
-}
-
-function amountUp(){
-  const amount = parseInt($('.itemAmountInput').val())
-  if(amount < parseInt($(".itemAmount").text()))
-    $('.itemAmountInput').val(amount + 1)
 }
 
 function getNewDate(){

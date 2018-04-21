@@ -19,6 +19,8 @@ var home = require('./routes/home');
 var user = require('./routes/user');
 var owner = require('./routes/owner');
 var admin = require('./routes/admin');
+var api = require('./routes/api');
+
 const basicAuth = require('./middleware/basicAuth');
 
 var app = express();
@@ -46,6 +48,7 @@ app.use('/', home);
 app.use('/user', basicAuth, user);
 app.use('/owner', basicAuth, owner);
 app.use('/admin', basicAuth, admin);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

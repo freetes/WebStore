@@ -4,23 +4,31 @@
   //- 轮播图
   .row
     .col-md-2
-      p 这里是分类
-    .col-md-10.col-xs-12
+      .list-group
+        a.list-group-item(href='/search?name=青菜') 青菜
+        a.list-group-item(href='/search?name=番茄') 番茄
+        a.list-group-item(href='/search?name=土豆') 土豆
+        a.list-group-item(href='/search?name=西兰花') 西兰花
+        a.list-group-item(href='/search?name=青豆') 青豆
+        a.list-group-item(href='/search?name=紫薯') 紫薯
+        a.list-group-item(href='/search?name=青菜') 
+        a.list-group-item(href='/search?name=青菜') 
+        a.list-group-item(href='/search?name=青菜') 
+        a.list-group-item(href='/search?name=青菜') 
+        a.list-group-item(href='/search?name=青菜') 
+        
+
+    .col-md-8.col-xs-12
       #myCarousel.carousel.slide
-        ol.carousel-indicators
-          li.active(data-target='#myCarousel', data-slide-to='0')
-          li(data-target='#myCarousel', data-slide-to='1')
-          li(data-target='#myCarousel', data-slide-to='2')
-          li(data-target='#myCarousel', data-slide-to='3')
         .carousel-inner
           .item.active
-            img(src='/img/1.jpg', alt='First slide')
+            img.img-responsive(src='/img/1.jpg', alt='First slide', style='height: 500px')
           .item
-            img(src='/img/2.jpg', alt='Second slide')
+            img(src='/img/2.jpg', alt='Second slide', style='height: 500px')
           .item
-            img(src='/img/3.jpg', alt='Third slide')
+            img(src='/img/3.jpg', alt='Third slide', style='height: 500px')
           .item
-            img(src='/img/4.jpg', alt='Fourth slide')
+            img(src='/img/4.jpg', alt='Fourth slide', style='height: 500px')
         a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
           span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
           span.sr-only Previous
@@ -29,18 +37,40 @@
           span.sr-only Next
         script.
           $("#myCarousel").carousel('cycle');
+    .col-md-2
+      blockquote
+        p 为您推荐
+      -const x = parseInt(Math.random()*items.length)
+      -let y
+      -do{
+        -y = parseInt(Math.random()*items.length)
+      -}while(x == y)
+      .col-md-12.col-xs-12
+        a(href="/item?id=#{items[x]._id}", style="text-decoration: none")
+          .panel.panel-default
+            .panel-body
+              img.img-responsive(src="#{items[x].picture}", alt="商品图片")
+              p.text-center.text-muted #{items[x].name}
+      .col-md-12.col-xs-12
+        a(href="/item?id=#{items[y]._id}", style="text-decoration: none")
+          .panel.panel-default
+            .panel-body
+              img.img-responsive(src="#{items[y].picture}", alt="商品图片")
+              p.text-center.text-muted #{items[y].name}
+
   //- 热门商品
   hr
   .row
     .col-md-12.col-xs-12
-      h2.text-center(style="margin-top:0") 热门商品
-      -each item in items
+      blockquote
+        h3 热门商品
+      each item in items
         .col-md-3.col-xs-12
-          .panel.panel-default
-            .panel-body
-              img.img-responsive(src="#{item.picture}", alt="商品图片")
-              span.text-left #{item.name}
-              span.text-right #{item.price}
-              a(href="/item/#{item._id}") 查看详细
+          a(href="/item?id=#{item._id}", style="text-decoration: none")
+            .panel.panel-default
+              .panel-body
+                img.img-responsive(src="#{item.picture}", alt="商品图片")
+                h4.text-center.text-muted #{item.name}
+                h3.text-center.text-danger ￥#{item.price}
 
 

@@ -1,8 +1,19 @@
 extends ../layout
 //- 主页
 block content
-  include ../head/nav
-  .container
-    p 有#{items.length}个商品
+  link(rel="stylesheet", href="/css/normal.css")
+
+  body
+    include ../head/nav
+    .container
+      p 有#{items.length}个商品
+      each item in items
+        .col-md-3.col-xs-12
+          a(href="/item?id=#{item._id}", style="text-decoration: none")
+            .panel.panel-default
+              .panel-body
+                img.img-responsive(src="#{item.picture}", alt="商品图片")
+                h4.text-center.text-muted #{item.name}
+                h3.text-center.text-danger ￥#{item.price}
 
   include ../head/footer

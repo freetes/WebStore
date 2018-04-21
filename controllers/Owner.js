@@ -19,7 +19,11 @@ const Owner = {
     form.parse(req, function(err, fields, files) {
       let item = fields
       item.tags = item.tags.split(' ')
-      item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
+      // Linux
+      // item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
+      // windows
+      item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
+      
       item.owner = req.session.userid
       item.isHot = false
       Models.ItemModel(item).save((err, result)=>{
@@ -37,6 +41,19 @@ const Owner = {
             title: '发布管理',
             items
           });
+        })
+    })
+  },
+  // GET /owner/order
+  getOrder: (req, res)=>{
+    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+      if(user.level == 1)
+        Models.OrderModel.find({seller: user.id}, (err, orders)=>{
+          return res.render('owner/order', {
+            user,
+            orders,
+            title: '订单管理'
+          })
         })
     })
   },

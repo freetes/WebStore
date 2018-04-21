@@ -1,0 +1,52 @@
+extends ../layout
+//- 主页
+block content
+  link(rel="stylesheet", href="/css/normal.css")
+
+  body
+    include ../head/nav
+    .container
+      .row
+        -if(result.length == 0)
+          blockquote
+            p 无结果
+        -else
+          blockquote
+            p 搜索结果
+          each item in result
+            a.col-md-6.col-xs-12(href="/item?id=#{item._id}")
+              .panel.panel-default
+                .panel-body
+                  .col-md-6
+                    img.img-responsive(src="#{item.picture}")
+                  .col-md-6
+                    h3
+                      strong #{item.name}
+                    p.text-muted 价格：￥
+                      span.itemPrice.text-danger(style="font-size: 25px") #{item.price}
+                    p.text-muted 上架日期：
+                      span #{item.date}
+                    p.text-muted 库存：
+                      span.itemAmount #{item.amount}
+                    p.text-muted 产地：
+                      span #{item.storehouse}
+                    p.text-muted 描述：
+                      span #{item.introduction}
+
+      //- 热门商品
+      br
+      .row
+        blockquote
+          p 热门商品
+        each item in items
+          .col-md-3.col-xs-12
+            a(href="/item?id=#{item._id}", style="text-decoration: none")
+              .panel.panel-default
+                .panel-body
+                  img.img-responsive(src="#{item.picture}", alt="商品图片")
+                  h4.text-center.text-muted #{item.name}
+                  h3.text-center.text-danger ￥#{item.price}
+
+    include ../head/footer
+    include ../public/alertInfoModal
+    script(src="/js/ctrlItemByUser.js")

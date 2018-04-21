@@ -31,6 +31,7 @@ const OrderSchema = new Schema({
   amount: Number,
   price: Number,
   address: String,
+  mobile: String,
   date: String,
   status: Number
 });

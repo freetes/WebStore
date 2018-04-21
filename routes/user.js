@@ -15,4 +15,6 @@ router.get('/order', user.getOrder);
 
 router.post('/order', user.newOrder);
 
+router.get('/buy/:id', user.getBuy);
+
 module.exports = router;

@@ -1,28 +1,50 @@
 extends ../layout
 //- 主页
 block content
+  link(rel="stylesheet", href="/css/normal.css")
+
   body
     include ../head/nav
     .container
-      p 这里是商品详情页
-      .col-md-4
-        img.img-responsive(src="#{item.picture}")
-      .col-md-8
-        h2 #{item.name}
-        p 价格：
-          span.itemPrice #{item.price}
-        p 上架日期：#{item.date}
-        p 数量：
-          span.itemAmount #{item.amount}
-        p 产地：#{item.storehouse}
-        p 描述：#{item.introduction}
-        .amountDiv
-          button.btn.btn-default(onclick="amountDown()") -
-          input.itemAmountInput(type="text", value='1')
-          button.btn.btn-default(onclick="amountUp()") +
-        button.btn.btn-default(onclick="addShopCar('#{item._id}', '#{item.owner}')") 加入购物车
-        button.btn.btn-primary(onclick="buyItem('#{item._id}', '#{item.owner}')") 购买
-          
+      .row
+        .col-md-4.table-bordered
+          img.img-responsive(src="#{item.picture}")
+        .col-md-8
+          h3
+            strong #{item.name}
+          p.text-muted 价格：￥
+            span.itemPrice.text-danger(style="font-size: 25px") #{item.price}
+          p.text-muted 上架日期：
+            span #{item.date}
+          p.text-muted 库存：
+            span.itemAmount #{item.amount}
+          p.text-muted 产地：
+            span #{item.storehouse}
+          p.text-muted 描述：
+            span #{item.introduction}
+          br
+          -if(user == undefined)
+            span 您尚未登录，请先
+              a(href='/signin') 登录
+          -else
+            button.btn.btn-default(onclick="addShopCar('#{item._id}', '#{item.owner}')") 加入购物车
+            a.btn.btn-primary(href="/user/buy/#{item._id}") 购买
+
+      //- 热门商品
+      br
+      .row
+        .col-md-12.col-xs-12
+          blockquote
+            p 热门商品
+          each item in items
+            .col-md-3.col-xs-12
+              a(href="/item?id=#{item._id}", style="text-decoration: none")
+                .panel.panel-default
+                  .panel-body
+                    img.img-responsive(src="#{item.picture}", alt="商品图片")
+                    h4.text-center.text-muted #{item.name}
+                    h3.text-center.text-danger ￥#{item.price}
+  
     include ../head/footer
     include ../public/alertInfoModal
     script(src="/js/ctrlItemByUser.js")
