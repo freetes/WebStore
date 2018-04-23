@@ -5,7 +5,7 @@ block content
   body
     include ../../head/nav
     .container
-      form(action='/owner/additem', method='POST', enctype='multipart/form-data')
+      form.form-horizontal.col-md-6.col-md-offset-3(action='/owner/additem', method='POST', enctype='multipart/form-data')
         .form-group
           label 名称
           input.form-control(type='text', name='name', placeholder='名称')
@@ -33,6 +33,6 @@ block content
           label 图片
           input#itemPicture(type='file', name='picture')
 
-        button.btn.btn-default.updateItemBtn 提交
+        button.btn.btn-primary(style="background-color: green") 提交
  
     include ../../head/footer

@@ -6,7 +6,7 @@ function getItemInfo(id, btn){
         },
         result=>{
             $(btn).siblings(".col-md-2").children().attr('src', result.picture)
-            $(btn).siblings(".col-md-10").find(".name").text(result.name)
+            $(btn).siblings(".col-md-10").find(".item").text(result.name)
             $(btn).siblings(".col-md-10").find(".amount").text(result.amount)
             
         }
@@ -19,7 +19,7 @@ function getUserInfo(id, btn){
             id,
         },
         result=>{
-            $(btn).siblings(".col-md-10").find(".seller").text(result.name)
+            $(btn).siblings(".col-md-10").find(".name").text(result.name)
         }
     )
 }

@@ -5,17 +5,17 @@ function addShopCar(item, seller) {
       seller,
       item,
       price: parseInt($('.itemPrice').text()),
-      date: getNewDate()
     },
     result=>{
       if(result){
 				$(".alertMessage").text("添加成功！");
-				$("#alertInfoModal").modal();
+        $("#alertInfoModal").modal();        
 			}
 			else{
 				$(".alertMessage").text("出错了！");
 				$("#alertInfoModal").modal();
-			}
+      }
+      setTimeout(function(){location.reload()}, 1000)
     }
   )
 }

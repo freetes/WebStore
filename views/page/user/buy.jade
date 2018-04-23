@@ -15,7 +15,7 @@ block content
             p.hidden 卖家：
               span.ownerText #{item.owner}
             p 单价：￥
-              span.priceText.text-danger #{item.price}
+              span.priceText.text-danger(style="font-size:30px") #{item.price}
             p 数量：
               input.form-control.amountInput(type="number", name='amount', min='1', max='#{item.amount}', value='1')
             p 收获地址：
@@ -39,13 +39,14 @@ block content
           },
           result=>{
             if(result){
-              $(".alertMessage").text("添加成功！");
+              $(".alertMessage").text("购买成功！");
               $("#alertInfoModal").modal();
             }
             else{
               $(".alertMessage").text("出错了！");
               $("#alertInfoModal").modal();
             }
+            setTimeout(function(){location.href('/user/order')}, 1000)
           }
         )
       }

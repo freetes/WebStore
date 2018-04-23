@@ -7,10 +7,10 @@ block content
     .container(style="margin-top: 50px")
       .row
         .col-xs-12.col-md-4.col-md-offset-4(style="background-color: white")
-          h1.text-center 绿铺
+          h1.text-center(style="color: green") 绿铺
           div#signinDiv
             hr
-            h3.text-center 登录绿铺，发现更健康的美食
+            h3.text-center(style="color: green") 登录绿铺，发现更健康的美食
             br
             form.signinForm(action='/signin', method='POST')
               .input-group
@@ -33,14 +33,14 @@ block content
               
               br
               .form-group
-                button.btn.btn-primary.btn-block.signinBtn 登录
+                button.btn.btn-primary.btn-block.signinBtn(style="background-color: green") 登录
             hr
             p.text-center 没有帐号？
               a.changeDiv 注册
 
           div#signupDiv(style="display: none")
             hr
-            h3.text-center 注册绿铺，发现更健康的美食
+            h3.text-center(style="color: green") 注册绿铺，发现更健康的美食
             br
             form.signupForm(action='/signup', method='POST')
               .input-group
@@ -73,10 +73,10 @@ block content
               
               br
               .form-group
-                button.btn.btn-primary.btn-block.signupBtn 注册
+                button.btn.btn-primary.btn-block.signupBtn(style="background-color: green") 注册
             hr
             p.text-center 已有帐号？
               a.changeDiv 登录
-          p.text-center 
+          p.text-center
             a(href="/") 直接进入
     script(src="/js/signin.js")

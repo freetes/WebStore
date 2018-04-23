@@ -10,7 +10,7 @@ block content
         .col-md-10
           -if(myitems.length != 0)
             blockquote 
-              p 一共#{myitems.length}个商品
+              p 有#{myitems.length}个商品
             each i in myitems
               .col-md-12.col-xs-12
                 .panel.panel-default
@@ -19,9 +19,9 @@ block content
                       img.img-responsive
                     .col-md-10
                       h3
-                        strong.name
+                        strong.item
                       p.text-muted 卖家：
-                        span.seller
+                        span.name
                       p.text-muted 库存：
                         span.amount
                       p.text-muted 单价：
@@ -30,7 +30,7 @@ block content
                     button.hidden.btn.btn-primary.btn-getinfo(onclick="getAllInfo('#{i.item}', '#{i.seller}', this)") 获取信息
           -else
             p 你的购物车空无一物，快去逛逛吧
-        .col-md-2  
+        .col-md-2.hidden-xs
           blockquote  
             p 为您推荐
           -const x = parseInt(Math.random()*items.length)

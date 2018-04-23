@@ -5,7 +5,8 @@ block content
   body
     include ../../head/nav
     .container
-      p 发布了 #{items.length} 个商品
+      blockquote
+        p 发布了 #{items.length} 个商品
       each item in items
         .col-md-3.col-xs-12
           a(href="/item?id=#{item._id}")

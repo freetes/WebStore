@@ -2,13 +2,14 @@ nav.navbar.navbar-default(style="margin-bottom: 0px; background-color: white")
   .container-fluid
     .container
       .navbar-header
-        span.navbar-brand(style="font-size: 35px; color: green") 绿铺
+        span.navbar-brand(style="font-size: 30px; color: green") 绿铺
         span.navbar-brand(style="color: green") 发现更健康的食品
         button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#userNav', aria-expanded='false')
           span.sr-only Toggle navigation
           span.icon-bar
           span.icon-bar
           span.icon-bar
+      
       .collapse.navbar-collapse
         ul.nav.navbar-nav.navbar-right
           -if(user == undefined)
@@ -19,19 +20,18 @@ nav.navbar.navbar-default(style="margin-bottom: 0px; background-color: white")
           -else
             li.text-center
               span.navbar-text 欢迎您，#{user.name}
-
             li 
               a.btn(href="/signin") 退出登录
 
-nav.navbar.navbar-default(style="background-color: white")
-  .container-fluid
-    .container
       .collapse.navbar-collapse#userNav
         ul.nav.navbar-nav
           li#homeLi.active
             a(href='/') 首页
           li#allitemLi
             a(href='/allitem') 全部商品
+          -if(user == undefined)
+            li.visible-xs
+              a(href="/signin") 登录
           -if(user != undefined && user.level == 0)
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -46,8 +46,7 @@ nav.navbar.navbar-default(style="background-color: white")
                   a(href='/user/order') 我的订单
           -else if(user != undefined && user.level == 1)
             li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                | 我的绿铺
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false') 我的绿铺
                 span.caret
               ul.dropdown-menu
                 li
@@ -58,11 +57,17 @@ nav.navbar.navbar-default(style="background-color: white")
                   a(href='/owner/myadd') 我的发布
                 li
                   a(href='/owner/order') 我的订单
+
+          -if(user != undefined)
+            li.visible-xs
+              a(href="/signin") 注销
+              
         form.searchForm.navbar-form.navbar-right(action='/search', method="GET")
           .form-group.has-feedback
             input.form-control(type='text', placeholder='搜索商品', name='name')
             span.glyphicon.glyphicon-search.form-control-feedback(aria-hidden="true")
 
+br 
 script.
   $("#userNav ul li").removeClass('active')
   switch(window.location.pathname){

@@ -84,10 +84,14 @@ const User = {
   addItem: (req, res)=>{
     Models.ShopCarModel.findOne({id: req.session.userid}, (err, shopcar)=>{
       if(err) return res.json(false)
+      for(let i of shopcar.items){
+        if(i.item == req.body.item)
+          return res.json(false)
+      }
       shopcar.items.push(req.body)
       Models.ShopCarModel.findOneAndUpdate(
         {id: req.session.userid},
-        {items: shopcar.items}, 
+        {items: shopcar.items},
         (err, result)=>{
           if(err) return res.json(false)
           return res.json(true)

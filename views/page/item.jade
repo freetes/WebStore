@@ -7,7 +7,7 @@ block content
     include ../head/nav
     .container
       .row
-        .col-md-4.table-bordered
+        .col-md-4
           img.img-responsive(src="#{item.picture}")
         .col-md-8
           h3
@@ -24,8 +24,9 @@ block content
             span #{item.introduction}
           br
           -if(user == undefined)
-            span 您尚未登录，请先
+            span 请先
               a(href='/signin') 登录
+              span 后，再购买
           -else
             button.btn.btn-default(onclick="addShopCar('#{item._id}', '#{item.owner}')") 加入购物车
             a.btn.btn-primary(href="/user/buy/#{item._id}") 购买

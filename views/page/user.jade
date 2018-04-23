@@ -3,7 +3,9 @@
 .container
   //- 轮播图
   .row
-    .col-md-2
+    .col-md-2.hidden-xs
+      blockquote
+        p 热门搜索
       .list-group
         a.list-group-item(href='/search?name=青菜') 青菜
         a.list-group-item(href='/search?name=番茄') 番茄
@@ -11,14 +13,12 @@
         a.list-group-item(href='/search?name=西兰花') 西兰花
         a.list-group-item(href='/search?name=青豆') 青豆
         a.list-group-item(href='/search?name=紫薯') 紫薯
-        a.list-group-item(href='/search?name=青菜') 
-        a.list-group-item(href='/search?name=青菜') 
-        a.list-group-item(href='/search?name=青菜') 
-        a.list-group-item(href='/search?name=青菜') 
-        a.list-group-item(href='/search?name=青菜') 
-        
+        a.list-group-item(href='/search?name=冬瓜') 冬瓜
+        a.list-group-item(href='/search?name=辣椒') 辣椒 
+        a.list-group-item(href='/search?name=苹果') 苹果 
+        a.list-group-item(href='/search?name=香菜') 香菜 
 
-    .col-md-8.col-xs-12
+    .col-md-8.hidden-xs
       #myCarousel.carousel.slide
         .carousel-inner
           .item.active
@@ -37,7 +37,7 @@
           span.sr-only Next
         script.
           $("#myCarousel").carousel('cycle');
-    .col-md-2
+    .col-md-2.hidden-xs
       blockquote
         p 为您推荐
       -const x = parseInt(Math.random()*items.length)
@@ -58,19 +58,21 @@
               img.img-responsive(src="#{items[y].picture}", alt="商品图片")
               p.text-center.text-muted #{items[y].name}
 
-  //- 热门商品
-  hr
+  //- 热门食品
+  hr.hidden-xs
   .row
     .col-md-12.col-xs-12
       blockquote
-        h3 热门商品
+        p 热门食品
+      -items.sort((a, b)=> new Date(b.date)-new Date(a.date))
       each item in items
-        .col-md-3.col-xs-12
+        .col-md-3.col-xs-6
           a(href="/item?id=#{item._id}", style="text-decoration: none")
             .panel.panel-default
               .panel-body
                 img.img-responsive(src="#{item.picture}", alt="商品图片")
                 h4.text-center.text-muted #{item.name}
                 h3.text-center.text-danger ￥#{item.price}
-
+      .clearfix.visible-xs-block
+      
 
