@@ -8,7 +8,7 @@ block content
     .container
       p 有#{items.length}个商品
       each item in items
-        .col-md-3.col-xs-12
+        .col-md-3.col-xs-6
           a(href="/item?id=#{item._id}", style="text-decoration: none")
             .panel.panel-default
               .panel-body
@@ -16,4 +16,4 @@ block content
                 h4.text-center.text-muted #{item.name}
                 h3.text-center.text-danger ￥#{item.price}
 
-  include ../head/footer
+    include ../head/footer

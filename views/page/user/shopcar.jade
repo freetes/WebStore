@@ -9,7 +9,7 @@ block content
       .row
         .col-md-10
           -if(myitems.length != 0)
-            blockquote 
+            blockquote
               p 有#{myitems.length}个商品
             each i in myitems
               .col-md-12.col-xs-12
@@ -69,5 +69,4 @@ block content
 
 
     include ../../head/footer
-    include ../../public/alertInfoModal
     script(src="/js/ajax.js")

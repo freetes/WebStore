@@ -45,10 +45,10 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', home);
+app.use('/api', api);
 app.use('/user', basicAuth, user);
 app.use('/owner', basicAuth, owner);
 app.use('/admin', basicAuth, admin);
-app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

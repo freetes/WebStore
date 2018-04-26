@@ -1,7 +1,6 @@
 extends ../layout
 //- 主页
 block content
-  //- script(src="/js/publicAPI.js")
 
   -if(user == undefined || user.level != 2)
     link(rel='stylesheet', href='/css/normal.css')
@@ -9,7 +8,6 @@ block content
       include ../head/nav
       include user
       include ../head/footer
-      include ../public/alertInfoModal
       script(src="/js/homeByUser.js")
 
   -else

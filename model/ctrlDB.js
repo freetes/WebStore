@@ -2,14 +2,14 @@ const Models = require('../model/dataModel');
 
 const ctrlDB = {
   // 获取所有热门商品信息
-  getAllItemInfo: async ()=>{
+  getAllItem: async ()=>{
     return {
-      items: await Models.ItemModel.find()
+      items: await Models.ItemModel.find({})
     }
   },
   getAllInfo: async ()=>{
     return {
-      items: await Models.ItemModel.find(),
+      items: await Models.ItemModel.find({}),
       users: await Models.UserModel.find({level: { $ne:2}})
     }
   }

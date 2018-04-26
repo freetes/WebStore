@@ -23,7 +23,7 @@ block content
                       .col-md-6
                         p.text-muted 买家：
                           span.name
-                        p.text-muted 数量：
+                        p.text-muted 购买数量：
                           span #{i.amount}
                         p.text-muted 成交日期：
                           span #{i.date}
@@ -34,11 +34,12 @@ block content
                           span #{i.mobile}
                         p.text-muted 总价：
                           span.text-danger ￥#{i.price}
+                    
+                    button.btn.btn-primary() 删除订单
                     button.hidden.btn.btn-primary.btn-getinfo(onclick="getAllInfo('#{i.item}', '#{i.buyer}', this)") 获取信息
           -else
             p 无订单
 
 
     include ../../head/footer
-    include ../../public/alertInfoModal
     script(src="/js/ajax.js")

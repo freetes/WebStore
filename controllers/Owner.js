@@ -7,11 +7,24 @@ const Owner = {
   // GET /owner/additem
   addItem: (req, res)=>{
     Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      if(user.level == 1)
-        return res.render('owner/additem',{
-          user,
-          title: '发布商品'
-        });
+      if(user.level == 1){
+        if(req.query.id == undefined){
+          return res.render('owner/additem',{
+            user,
+            title: '发布商品'
+          });
+        }
+        else{
+          Models.ItemModel.findOne({_id: req.query.id}, (err, item)=>{
+            if(err) return res.json(false)
+            return res.render('owner/additem',{
+              user,
+              item,
+              title: '发布商品'
+            });
+          })
+        }
+      }
     })
   },
   // POST /owner/additem
@@ -20,21 +33,48 @@ const Owner = {
       let item = fields
       item.tags = item.tags.split(' ')
       // Linux
-      // item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
+      if(files['picture'] != undefined)
+        item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
       // windows
-      item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
+      // item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
       
       item.owner = req.session.userid
       item.isHot = false
-      Models.ItemModel(item).save((err, result)=>{
-        return res.redirect(302, '/owner/additem');
-      })
+      
+      if(item.id == undefined)
+        Models.ItemModel(item).save((err, result)=>{
+          if(err){
+            res.render('owner/additem',{
+              user,
+              title: '发布商品',
+              msg: err
+            });
+            return
+          }
+          else{
+            Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+              if(user.level == 1)
+                res.render('owner/additem',{
+                  user,
+                  title: '发布商品',
+                  msg: '发布成功'
+                });
+                return 
+            })
+          }
+        })
+      else{
+        Models.ItemModel.findById({_id: item.id}, (err, item)=>{
+          if(err) return res.json(false)
+          
+        })
+      }
     });
   },
   // GET /owner/myadd
   getAdd: (req, res)=>{
     Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
-      if(user.level == 1)
+      if(user.level == 1){
         Models.ItemModel.find({owner: user.id}, (err, items)=>{
           return res.render('owner/myadd',{
             user,
@@ -42,6 +82,7 @@ const Owner = {
             items
           });
         })
+      }
     })
   },
   // GET /owner/order
@@ -54,6 +95,16 @@ const Owner = {
             orders,
             title: '订单管理'
           })
+        })
+    })
+  },
+  // POST /owner/deleteItem
+  deleteItem: (req, res)=>{
+    Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+      if(user.level == 1)
+        Models.ItemModel.findOneAndRemove({_id: req.body.id}, (err, result)=>{
+          if(err) return res.json(false)
+          return res.json(true)
         })
     })
   },

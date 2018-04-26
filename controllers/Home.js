@@ -6,18 +6,19 @@ const Home = {
   // GET /
   index: (req, res)=>{
     const title = '首页'
-    if(req.session.userid == undefined || req.session.userid == null)
-      CtrlDB.getAllItemInfo().then(info=>{
+    if(req.session.userid == undefined || req.session.userid == null){
+      CtrlDB.getAllItem().then(info=>{
         return res.render('index', {
           title,
           items: info.items
         })
       })
+    }
     else{
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
         // normal user
         if(user.level != 2){
-          CtrlDB.getAllItemInfo().then(info=>{
+          CtrlDB.getAllItem().then(info=>{
             return res.render('index', {
               title,
               user,
@@ -45,7 +46,7 @@ const Home = {
     const title = '所有商品'
     // 未登录
     if(req.session.userid == undefined || req.session.userid == null)
-      CtrlDB.getAllItemInfo().then(info=>{
+      CtrlDB.getAllItem().then(info=>{
         return res.render('allitem', {
           title,
           items: info.items
@@ -56,7 +57,7 @@ const Home = {
       Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
         // normal user
         if(user.level != 2)
-          CtrlDB.getAllItemInfo().then(info=>{
+          CtrlDB.getAllItem().then(info=>{
             return res.render('allitem', {
               title,
               user,
@@ -190,8 +191,10 @@ const Home = {
     // }
     Models.UserModel.find({'id': req.body.id}, (err, user)=>{
       if(user.length != 0)
-        return res.json({
-          message: '用户名已被注册！'
+        return res.render('signin',{
+          title,
+          verifyCodeExpression: req.session.verifyExpression,
+          message: '用户被注册！'
         });
       else{
         Models.UserModel({
@@ -204,9 +207,10 @@ const Home = {
             id: req.body.id,
             items: []
           }).save(()=>{
-            return res.json({
-              message: '注册成功！'
-            })
+            req.session.userid = req.body.id;
+            delete req.session.verifyExpression
+            delete req.session.verifyResult
+            return res.redirect(302, '/');
           })
         })
       }

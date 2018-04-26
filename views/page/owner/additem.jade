@@ -5,22 +5,28 @@ block content
   body
     include ../../head/nav
     .container
-      form.form-horizontal.col-md-6.col-md-offset-3(action='/owner/additem', method='POST', enctype='multipart/form-data')
+      p #{msg}
+      form.form-horizontal.col-md-6.col-md-offset-3(action='/owner/additemPost', method='POST', enctype='multipart/form-data')
+        -if(item != undefined)
+          .form-group.hidden
+            label 名称
+            input.form-control(type='text', name='id', value="#{item._id}")
+          
         .form-group
           label 名称
-          input.form-control(type='text', name='name', placeholder='名称')
+          input.form-control(type='text', name='name', placeholder='名称', value="#{item==undefined?'':item.name}")
         .form-group
           label 价格
-          input.form-control(type='text', name='price', placeholder='价格')
+          input.form-control(type='text', name='price', placeholder='价格', value="#{item==undefined?'':item.price}")
         .form-group
           label 描述
-          input.form-control(type='text', name='introduction', placeholder='描述')
+          input.form-control(type='text', name='introduction', placeholder='描述', value="#{item==undefined?'':item.introduction}")
         .form-group
           label 数目
-          input.form-control(type='text', name='amount', placeholder='数目')
+          input.form-control(type='text', name='amount', placeholder='数目', value="#{item==undefined?'':item.amount}")
         .form-group
           label 产地
-          input.form-control(type='text', name='storehouse', placeholder='产地')
+          input.form-control(type='text', name='storehouse', placeholder='产地', value="#{item==undefined?'':item.storehouse}")
         .form-group
           label 标签
           input.form-control(type='text', name='tags', placeholder='标签')

@@ -9,11 +9,38 @@ block content
         p 发布了 #{items.length} 个商品
       each item in items
         .col-md-3.col-xs-12
-          a(href="/item?id=#{item._id}")
-            .panel.panel-default
-              .panel-body
-                img.img-responsive(src="#{item.picture}", alt="商品图片")
-                h4.text-center.text-muted #{item.name}
-                h3.text-center.text-danger ￥#{item.price}
+          .panel.panel-default
+            .panel-body
+              img.img-responsive(src="#{item.picture}", alt="商品图片")
+              h4.text-center.text-muted #{item.name}
+              h3.text-center.text-danger ￥#{item.price}
+              a.btn.btn-default(href="/owner/additem?id=#{item._id}") 修改信息
+              button.btn.btn-danger(onclick="deleteItem.call(this, '#{item._id}')") 删除发布
+    
+    script.
+      function deleteItem(id){
+        const that = this
+        $.post('/owner/deleteItem', {id}, 
+          result=>{
+            if(result){
+              if(result){
+                $(".alertMessage").text("删除成功！");
+                $("#alertInfoModal").modal('show');
+                setTimeout(function(){
+                  $("#alertInfoModal").modal('hide');            
+                }, 1000)
+                $(that).parent().parent().parent().remove()
+              }
+              else{
+                $(".alertMessage").text("删除成功！");
+                $("#alertInfoModal").modal('show');
+                setTimeout(function(){
+                  $("#alertInfoModal").modal('hide');            
+                }, 1000)
+              }
+            }
+          }
+        )
+      }
 
     include ../../head/footer
