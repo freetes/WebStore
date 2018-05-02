@@ -3,40 +3,490 @@
 .container
   //- 轮播图
   .row
-    .col-md-2.hidden-xs
-      blockquote
-        p 热门搜索
-      .list-group
-        a.list-group-item(href='/search?name=青菜') 青菜
-        a.list-group-item(href='/search?name=番茄') 番茄
-        a.list-group-item(href='/search?name=土豆') 土豆
-        a.list-group-item(href='/search?name=西兰花') 西兰花
-        a.list-group-item(href='/search?name=青豆') 青豆
-        a.list-group-item(href='/search?name=紫薯') 紫薯
-        a.list-group-item(href='/search?name=冬瓜') 冬瓜
-        a.list-group-item(href='/search?name=辣椒') 辣椒 
-        a.list-group-item(href='/search?name=苹果') 苹果 
-        a.list-group-item(href='/search?name=香菜') 香菜 
-
-    .col-md-8.hidden-xs
-      #myCarousel.carousel.slide
-        .carousel-inner
-          .item.active
-            img.img-responsive(src='/img/1.jpg', alt='First slide', style='height: 500px')
-          .item
-            img(src='/img/2.jpg', alt='Second slide', style='height: 500px')
-          .item
-            img(src='/img/3.jpg', alt='Third slide', style='height: 500px')
-          .item
-            img(src='/img/4.jpg', alt='Fourth slide', style='height: 500px')
-        a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
-          span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
-          span.sr-only Previous
-        a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
-          span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
-          span.sr-only Next
+    #menu.hidden-xs
+      .col-md-2.hidden-xs
+        .list-group(style="width: 100%")
+          .list-group-item#fruit(href='/search?name=水果')
+            h4 水果
+            span.text-muted 核果仁果 热带水果
+          .list-group-item#vege(href='/search?name=蔬菜')
+            h4 蔬菜
+            span.text-muted 叶菜类 根茎菜类
+          .list-group-item#meat(href='/search?name=畜牧水产')
+            h4 畜牧水产
+            span.text-muted 禽畜类 水产类
+          .list-group-item#rice(href='/search?name=粮油米面')
+            h4 粮油米面
+            span.text-muted 五谷杂粮 食用油
+          .list-group-item#egg(href='/search?name=农副加工')
+            h4 农副加工
+            span.text-muted 茶叶 肉蛋奶
+          .list-group-item#tree(href='/search?name=苗木花草')
+            h4 苗木花草
+            span.text-muted 苗木 花卉盆栽
         script.
-          $("#myCarousel").carousel('cycle');
+          $(window).ready(function(){
+            $(".navDiv").css("height", $("#myCarousel").css("height"))
+          })
+
+          $("#fruit").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#fruitDiv").css('display', 'block')
+          })
+
+          $("#vege").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#vegetableDiv").css('display', 'block')
+          })
+
+          $("#meat").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#meatDiv").css('display', 'block')
+          })
+
+          $("#rice").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#riceDiv").css('display', 'block')
+          })
+
+          $("#egg").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#eggDiv").css('display', 'block')
+          })
+
+          $("#tree").mouseenter(function () {
+            $(".navDiv").css('display', 'none')
+            $("#treeDiv").css('display', 'block')
+          })
+
+          $("#menu").mouseleave(function () {
+            $(".navDiv").css('display', 'none')
+          })
+            
+          //- .list-group-item(href='/search?name=冬瓜')
+          //-   h4 农资农机
+          //-   a(href="") 苹果
+          //-   a(href="") 草莓
+          
+      .col-md-8.hidden-xs
+        #fruitDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 核果仁果类>
+            .col-md-6
+              a.btn(href="/search?name=苹果") 苹果
+              a.btn(href="/search?name=梨") 梨
+              a.btn(href="/search?name=山楂") 山楂
+              a.btn(href="/search?name=沙果") 沙果
+              a.btn(href="/search?name=蛇果") 蛇果
+              a.btn(href="/search?name=李子") 李子
+              a.btn(href="/search?name=鲜枣") 鲜枣
+              a.btn(href="/search?name=苹果") 杏
+              a.btn(href="/search?name=苹果") 杨梅
+              a.btn(href="/search?name=苹果") 青梅
+              a.btn(href="/search?name=苹果") 蜜桃
+              a.btn(href="/search?name=苹果") 毛桃
+              a.btn(href="/search?name=苹果") 蟠桃
+              a.btn(href="/search?name=苹果") 黄桃
+              a.btn(href="/search?name=苹果") 油桃
+              a.btn(href="/search?name=苹果") 石榴
+              a.btn(href="/search?name=苹果") 无花果
+              a.btn(href="/search?name=苹果") 番石榴
+              a.btn(href="/search?name=苹果") 黄皮果
+              a.btn(href="/search?name=苹果") 人参果
+              a.btn(href="/search?name=苹果") 红毛丹
+              a.btn(href="/search?name=苹果") 释迦果
+              a.btn(href="/search?name=苹果") 黑老虎
+              a.btn(href="/search?name=苹果") 罗汉果
+              a.btn(href="/search?name=苹果") 美藤果
+              a.btn(href="/search?name=苹果") 雪莲果
+              a.btn(href="/search?name=苹果") 火参果
+              a.btn(href="/search?name=苹果") 海红果
+              a.btn(href="/search?name=苹果") 拐枣
+              a.btn(href="/search?name=苹果") 构桃
+              a.btn(href="/search?name=苹果") 樱桃
+              a.btn(href="/search?name=苹果") 枇杷
+              a.btn(href="/search?name=苹果") 西梅
+              a.btn(href="/search?name=苹果") 金刺梨
+              a.btn(href="/search?name=苹果") 乌梅
+              a.btn(href="/search?name=苹果") 钙果
+              a.btn(href="/search?name=苹果") 鲜玉米
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 热带水果>
+            .col-md-6
+              a.btn 芒果
+              a.btn 荔枝
+              a.btn 龙眼
+              a.btn 菠萝
+              a.btn 火龙果
+              a.btn 香蕉
+              a.btn 榴莲
+              a.btn 木瓜
+              a.btn 莲雾
+              a.btn 山竹
+              a.btn 椰子
+              a.btn 甘蔗
+              a.btn 菠萝蜜
+              a.btn 牛油果
+              a.btn 橄榄
+              a.btn 杨桃
+              a.btn 柠檬
+              a.btn 蛋黄果
+              a.btn 余甘果
+              a.btn 人心果
+              a.btn 诺丽果
+              a.btn 榴莲蜜
+              a.btn 香如蜜
+
+        #vegetableDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 根茎菜类>
+            .col-md-6
+              a.btn 萝卜
+              a.btn 胡萝卜
+              a.btn 竹笋
+              a.btn 葛根
+              a.btn 韭菜根
+              a.btn 魔芋
+              a.btn 木薯
+              a.btn 凉薯
+              a.btn 山药
+              a.btn 红薯
+              a.btn 紫薯
+              a.btn 土豆
+              a.btn 芋头
+              a.btn 板薯
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 叶菜类>
+            .col-md-6
+              a.btn 白菜
+              a.btn 小白菜
+              a.btn 生菜
+              a.btn 苋菜
+              a.btn 娃娃菜
+              a.btn 韭菜
+              a.btn 木耳菜
+              a.btn 香菜
+              a.btn 油麦菜
+              a.btn 油菜
+              a.btn 空心菜
+              a.btn 菠菜
+              a.btn 甜菜
+              a.btn 黄心菜
+              a.btn 萝卜菜
+              a.btn 芹菜
+              a.btn 莴笋
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 豆菜类>
+            .col-md-6
+              a.btn 毛豆
+              a.btn 刀豆
+              a.btn 四季豆
+              a.btn 豆角
+              a.btn 扁豆
+              a.btn 豌豆
+              a.btn 荷兰豆
+              a.btn 四棱豆
+
+        #meatDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 禽畜类>
+            .col-md-6
+              a.btn 鸡
+              a.btn 鸭
+              a.btn 鹅
+              a.btn 鸽子
+              a.btn 牛
+              a.btn 羊
+              a.btn 猪
+              a.btn 兔子
+              a.btn 野鸭
+              a.btn 山鸡
+              a.btn 火鸡
+              a.btn 珍珠鸡
+              a.btn 乌骨鸡
+              a.btn 野猪
+              a.btn 豪猪
+              a.btn 香猪
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 水产类>
+            .col-md-6
+              a.btn 鲈鱼
+              a.btn 鲤鱼
+              a.btn 泥鳅
+              a.btn 银鱼
+              a.btn 草鱼
+              a.btn 黄鳝
+              a.btn 青鱼
+              a.btn 鲫鱼
+              a.btn 鲢鱼
+              a.btn 鲶鱼
+              a.btn 鳜鱼
+              a.btn 鳜鱼
+              a.btn 鳊鱼
+              a.btn 鳢鱼
+              a.btn 鲳鱼
+              a.btn 石斑鱼
+              a.btn 带鱼
+              a.btn 黄花鱼
+              a.btn 黄颡鱼
+              a.btn 大闸蟹
+              a.btn 河蟹
+              a.btn 对虾
+              a.btn 小龙虾
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 特产类>
+            .col-md-6
+              a.btn 蛙
+              a.btn 骆驼
+              a.btn 蚕
+              a.btn 土元
+              a.btn 蟑螂
+              a.btn 螳螂
+              a.btn 蜈蚣
+              a.btn 黄粉虫
+              a.btn 水蛭
+              a.btn 蚯蚓
+              a.btn 甲鱼
+              a.btn 羊驼
+              a.btn 大雁
+              a.btn 蜜蜂
+
+        #riceDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 五谷杂粮>
+            .col-md-6
+              a.btn 红豆
+              a.btn 大豆
+              a.btn 绿豆
+              a.btn 芸豆
+              a.btn 蚕豆
+              a.btn 黑豆
+              a.btn 赤小豆
+              a.btn 大米
+              a.btn 小米
+              a.btn 玉米粒
+              a.btn 大麦
+              a.btn 小麦
+              a.btn 燕麦
+              a.btn 藜麦
+              a.btn 荞麦
+              a.btn 青稞
+              a.btn 高粱
+              a.btn 红米
+              a.btn 紫米
+              a.btn 黑米
+              a.btn 糯米
+              a.btn 薏米
+              a.btn 花生
+              a.btn 芝麻
+              a.btn 干豌豆
+              a.btn 菜籽
+              a.btn 茶籽
+              a.btn 葵花籽
+              a.btn 棉籽
+              a.btn 蓖麻
+              a.btn 苦荞米
+              a.btn 糜子
+              a.btn 鹰嘴豆
+              a.btn 熊猫豆
+              a.btn 胡麻籽
+              
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 食用油>
+            .col-md-6
+              a.btn 大豆油
+              a.btn 山茶油
+              a.btn 花生油
+              a.btn 橄榄油
+              a.btn 玉米油
+              a.btn 菜籽油
+              a.btn 葵花籽油
+              a.btn 色拉油
+              a.btn 火麻油
+              a.btn 亚麻籽油
+              a.btn 红花籽油
+              a.btn 夏威夷果油
+              a.btn 鳄梨油
+              a.btn 麻子油
+              a.btn 核桃油
+              a.btn 黄秋葵油
+              a.btn 黄芥油
+              a.btn 杏仁油
+              a.btn 苏籽油
+              a.btn 圣子油
+              a.btn 茶叶籽油
+              a.btn 花椒油
+              a.btn 猪油
+              a.btn 牡丹籽油
+              a.btn 芝麻油
+              a.btn 椰子油
+              a.btn 石榴籽油
+              a.btn 文冠果油
+
+
+        #eggDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 肉蛋类>
+            .col-md-6
+              a.btn 鸡蛋
+              a.btn 鸭蛋
+              a.btn 鹅蛋
+              a.btn 鹌鹑蛋
+              a.btn 鸽子蛋
+              a.btn 皮蛋
+              a.btn 咸蛋
+              a.btn 猪肉
+              a.btn 牛肉
+              a.btn 羊肉
+              a.btn 鸡肉
+              a.btn 鸭肉
+              a.btn 鹅肉
+              a.btn 兔肉
+              a.btn 鸽肉
+              a.btn 蛙肉
+              a.btn 鸡副产品
+              a.btn 鸭副产品
+              a.btn 鹅副产品
+              a.btn 猪副产品
+              a.btn 牛副产品
+              a.btn 羊副产品
+              a.btn 奶制品
+
+          hr
+          .row
+            .col-md-3
+              h4.text-right.text-muted 茶叶>
+            .col-md-6
+              a.btn 黑茶
+              a.btn 绿茶
+              a.btn 毛尖
+              a.btn 红茶
+              a.btn 花茶
+              a.btn 普洱
+              a.btn 乌龙茶
+              a.btn 黄茶
+              a.btn 白茶
+
+        #treeDiv.navDiv
+          .row
+            .col-md-3
+              h4.text-right.text-muted 苗木>
+            .col-md-6
+              a.btn 香樟
+              a.btn 国槐
+              a.btn 红枫
+              a.btn 黄杨
+              a.btn 樱花
+              a.btn 女贞
+              a.btn 海棠
+              a.btn 柳树
+              a.btn 白蜡
+              a.btn 水腊
+              a.btn 紫荆
+              a.btn 栾树
+              a.btn 雪松
+              a.btn 榕树
+              a.btn 蜀桧
+              a.btn 油茶树
+              a.btn 竹子
+              a.btn 罗汉松
+              a.btn 白皮松
+              a.btn 湿地松
+              a.btn 樟子松
+              a.btn 速生杨
+              a.btn 榆树
+              a.btn 桂花树
+              a.btn 银杏树
+              a.btn 云杉
+              a.btn 水杉
+              a.btn 红豆杉
+              a.btn 玉兰
+              a.btn 紫薇
+              a.btn 枫树
+              a.btn 红叶李
+              a.btn 石楠
+              a.btn 红叶石楠
+              a.btn 红叶石楠
+              a.btn 黄槐
+              a.btn 香花槐
+              a.btn 冬青
+              a.btn 法国冬青
+              a.btn 法国梧桐
+              a.btn 梅树
+              a.btn 蜡梅
+              a.btn 龙柏
+              a.btn 侧柏
+              a.btn 洒金柏
+              a.btn 沙地柏
+              a.btn 桧柏
+              a.btn 朴树
+              a.btn 苏铁
+              a.btn 海桐球
+              a.btn 合欢树
+              a.btn 老人葵
+              a.btn 海枣
+              a.btn 中东海枣
+              a.btn 含笑
+              a.btn 红叶小檗
+              a.btn 西洋杜鹃
+              a.btn 七叶树
+              a.btn 沉香树
+              a.btn 红花继木
+              a.btn 杜英
+              a.btn 油松
+              a.btn 鸡爪槭
+              a.btn 杜鹃
+              a.btn 木槿
+              a.btn 碧桃
+              a.btn 香泡
+              a.btn 金丝楠木
+              a.btn 红皮榕
+              a.btn 重阳木
+              a.btn 杨树
+              a.btn 竹柏
+              a.btn 皂角树
+              a.btn 发财树
+              a.btn 风铃木
+              a.btn 水生绿植
+
+
+
+        #myCarousel.carousel.slide
+          .carousel-inner
+            .item.active
+              img.img-responsive(src='/img/1.jpg', alt='First slide', style='height: 500px')
+            .item
+              img(src='/img/2.jpg', alt='Second slide', style='height: 500px')
+            .item
+              img(src='/img/3.jpg', alt='Third slide', style='height: 500px')
+            .item
+              img(src='/img/4.jpg', alt='Fourth slide', style='height: 500px')
+          a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+            span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+            span.sr-only Previous
+          a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+            span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+            span.sr-only Next
+          script.
+            $("#myCarousel").carousel('cycle');
+      
     .col-md-2.hidden-xs
       blockquote
         p 为您推荐

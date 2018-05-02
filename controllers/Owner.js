@@ -33,7 +33,7 @@ const Owner = {
       let item = fields
       item.tags = item.tags.split(' ')
       // Linux
-      if(files['picture'] != undefined)
+      if(files.picture.name != '')
         item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
       // windows
       // item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
@@ -43,30 +43,35 @@ const Owner = {
       
       if(item.id == undefined)
         Models.ItemModel(item).save((err, result)=>{
-          if(err){
-            res.render('owner/additem',{
-              user,
-              title: '发布商品',
-              msg: err
+          if(err)
+            return res.render('error',{
+              message: err
             });
-            return
-          }
           else{
             Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
               if(user.level == 1)
-                res.render('owner/additem',{
+                return res.render('owner/additem',{
                   user,
                   title: '发布商品',
                   msg: '发布成功'
                 });
-                return 
             })
           }
         })
       else{
-        Models.ItemModel.findById({_id: item.id}, (err, item)=>{
-          if(err) return res.json(false)
-          
+        Models.ItemModel.findByIdAndUpdate({_id: item.id}, item, (err, item)=>{
+          if(err)
+            return res.render('error',{
+              message: err
+            });
+          Models.UserModel.findOne({'id': req.session.userid}, (err, user)=>{
+            if(user.level == 1)
+              return res.render('owner/additem',{
+                user,
+                title: '发布商品',
+                msg: '发布成功'
+              });
+          })
         })
       }
     });
