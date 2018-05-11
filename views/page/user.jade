@@ -3,7 +3,7 @@
 .container
   //- 轮播图
   .row
-    #menu.hidden-xs
+    #menu
       .col-md-2.hidden-xs
         .list-group(style="width: 100%")
           .list-group-item#fruit(href='/search?name=水果')
@@ -68,8 +68,8 @@
           //-   a(href="") 苹果
           //-   a(href="") 草莓
           
-      .col-md-8.hidden-xs
-        #fruitDiv.navDiv
+      .col-md-8.col-xs-12
+        #fruitDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 核果仁果类>
@@ -140,7 +140,7 @@
               a.btn 榴莲蜜
               a.btn 香如蜜
 
-        #vegetableDiv.navDiv
+        #vegetableDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 根茎菜类>
@@ -195,7 +195,7 @@
               a.btn 荷兰豆
               a.btn 四棱豆
 
-        #meatDiv.navDiv
+        #meatDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 禽畜类>
@@ -264,7 +264,7 @@
               a.btn 大雁
               a.btn 蜜蜂
 
-        #riceDiv.navDiv
+        #riceDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 五谷杂粮>
@@ -339,8 +339,7 @@
               a.btn 石榴籽油
               a.btn 文冠果油
 
-
-        #eggDiv.navDiv
+        #eggDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 肉蛋类>
@@ -384,7 +383,7 @@
               a.btn 黄茶
               a.btn 白茶
 
-        #treeDiv.navDiv
+        #treeDiv.navDiv.hidden-xs
           .row
             .col-md-3
               h4.text-right.text-muted 苗木>
@@ -469,13 +468,17 @@
         #myCarousel.carousel.slide
           .carousel-inner
             .item.active
-              img.img-responsive(src='/img/1.jpg', alt='First slide', style='height: 500px')
+              a(href="/item?id=5af2938f0988c209685f6562")
+                img.img-responsive(src='/img/1.jpg', alt='First slide')
             .item
-              img(src='/img/2.jpg', alt='Second slide', style='height: 500px')
+              a(href="/item?id=5ada012ed41be70d148fc2cd")
+                img.img-responsive(src='/img/2.jpg', alt='Second slide')
             .item
-              img(src='/img/3.jpg', alt='Third slide', style='height: 500px')
+              a(href="/item?id=5af290c862097a1b74c57092")
+                img.img-responsive(src='/img/3.jpg', alt='Third slide')
             .item
-              img(src='/img/4.jpg', alt='Fourth slide', style='height: 500px')
+              a(href="/item?id=5ada01a5d41be70d148fc2ce")
+                img.img-responsive(src='/img/4.jpg', alt='Fourth slide')
           a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
             span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
             span.sr-only Previous
@@ -495,32 +498,82 @@
       -}while(x == y)
       .col-md-12.col-xs-12
         a(href="/item?id=#{items[x]._id}", style="text-decoration: none")
-          .panel.panel-default
+          .panel.panel-default.itemDiv
             .panel-body
               img.img-responsive(src="#{items[x].picture}", alt="商品图片")
               p.text-center.text-muted #{items[x].name}
       .col-md-12.col-xs-12
         a(href="/item?id=#{items[y]._id}", style="text-decoration: none")
-          .panel.panel-default
+          .panel.panel-default.itemDiv
             .panel-body
               img.img-responsive(src="#{items[y].picture}", alt="商品图片")
               p.text-center.text-muted #{items[y].name}
 
   //- 热门食品
-  hr.hidden-xs
+  hr
   .row
     .col-md-12.col-xs-12
       blockquote
         p 热门食品
       -items.sort((a, b)=> new Date(b.date)-new Date(a.date))
-      each item in items
+      -items.forEach((item, index)=>{
         .col-md-3.col-xs-6
           a(href="/item?id=#{item._id}", style="text-decoration: none")
-            .panel.panel-default
+            .panel.panel-default.itemDiv(style="min-height: 250px; max-height: 350px")
               .panel-body
                 img.img-responsive(src="#{item.picture}", alt="商品图片")
-                h4.text-center.text-muted #{item.name}
-                h3.text-center.text-danger ￥#{item.price}
-      .clearfix.visible-xs-block
+                h3.text-center.text-danger ￥#{parseFloat(item.price).toFixed(2)}
+                h4.text-center.text-muted(style="font-size: 16px") #{item.name}
+      -})
+
+  hr
+  .row.hidden-xs
+    .col-md-2(style="font-size: 20px; color: gray")
+      span 友情链接：
+    .col-md-10
+      a.btn(target='_blank', title='农业之友', style="padding-left: 5px", href='http://www.nyzy.com/') 农业之友
+      a.btn(target='_blank', title='水果批发网', style="padding-left: 5px", href='http://www.114guoshu.com/') 水果批发网
+      a.btn(target='_blank', title='中国花木网', style="padding-left: 5px", href='http://www.huamu.com/') 中国花木网
+      a.btn(target='_blank', title='中国养殖网', style="padding-left: 5px", href='http://yangzhi.huangye88.com/') 中国养殖网
+      a.btn(target='_blank', title='养殖巴巴网', style="padding-left: 5px", href='http://www.yz88.org.cn/') 养殖巴巴网
+      a.btn(target='_blank', title='养猪网', style="padding-left: 5px", href='http://www.pigol.cn/') 养猪网
+      a.btn(target='_blank', title='吾谷网', style="padding-left: 5px", href='http://www.wugu.com.cn') 吾谷网
+      a.btn(target='_blank', title='苗木网', style="padding-left: 5px", href='http://www.miaomuzhan.com/') 苗木网
+      a.btn(target='_blank', title='大蒜价格行情网', style="padding-left: 5px", href='http://www.51garlic.com/') 大蒜价格行情网
+      a.btn(target='_blank', title='苹果价格网', style="padding-left: 5px", href='http://www.miaomuzhan.com/') 苗木网
       
+      a.btn(target='_blank', title='中国畜牧网', style="padding-left: 5px", href='http://www.ppxmw.com/') 中国畜牧网
+      a.btn(target='_blank', title='辣椒干批发', style="padding-left: 5px", href='http://www.e658.cn/') 辣椒干批发
+      a.btn(target='_blank', title='生猪价格行情预测', style="padding-left: 5px", href='http://www.shengzhujiage.com/') 生猪价格行情预测
+      a.btn(target='_blank', title='土地流转网', style="padding-left: 5px", href='http://www.tuliu.com/') 土地流转网
+      a.btn(target='_blank', title='土地流转网', style="padding-left: 5px", href='http://www.tdzyw.com/') 土地流转网
+      a.btn(target='_blank', title='农村网', style="padding-left: 5px", href='http://www.cuncunle.com/') 农村网
+      a.btn(target='_blank', title='中国茶网', style="padding-left: 5px", href='http://www.zgchawang.com/') 中国茶网
+      a.btn(target='_blank', title='买茶网', style="padding-left: 5px", href='http://www.maichawang.com/') 买茶网
+      a.btn(target='_blank', title='中国商业网', style="padding-left: 5px", href='http://www.miaomuzhan.com/') 苗木网
+      a.btn(target='_blank', title='苗木', style="padding-left: 5px", href='http://www.yn365.com') 苗木
+
+      a.btn(target='_blank', title='新发地', style="padding-left: 5px", href='http://www.xinfadi.com.cn') 新发地
+      a.btn(target='_blank', title='搜猪网', style="padding-left: 5px", href='http://www.soozhu.com/') 搜猪网
+      a.btn(target='_blank', title='食品代理', style="padding-left: 5px", href='http://www.spzs.com/') 食品代理
+      a.btn(target='_blank', title='安徽农网', style="padding-left: 5px", href='http://www.ahnw.gov.cn/') 安徽农网
+      a.btn(target='_blank', title='农资代理', style="padding-left: 5px", href='http://www.3456.tv/') 农资代理
+      a.btn(target='_blank', title='兽药招商', style="padding-left: 5px", href='http://www.1866.tv') 兽药招商
+      a.btn(target='_blank', title='供求信息', style="padding-left: 5px", href='http://www.258.com') 供求信息
+      a.btn(target='_blank', title='中国农机网', style="padding-left: 5px", href='http://www.nongjx.com/') 中国农机网
+      a.btn(target='_blank', title='茶网', style="padding-left: 5px", href='http://www.puercn.com') 茶网
+      a.btn(target='_blank', title='水果招商', style="padding-left: 5px", href='http://www.miaomuzhan.com/') 苗木网
+      a.btn(target='_blank', title='品牌加盟网', style="padding-left: 5px", href='http://www.1637.com/') 品牌加盟网
+
+      a.btn(target='_blank', title='中国养猪网', style="padding-left: 5px", href='http://www.zhuwang.cc/') 中国养猪网
+      a.btn(target='_blank', title='火爆农化网', style="padding-left: 5px", href='http://www.1988.tv/') 火爆农化网
+      a.btn(target='_blank', title='饮料招商', style="padding-left: 5px", href='http://www.spdl.com/') 饮料招商
+      a.btn(target='_blank', title='养生保健', style="padding-left: 5px", href='http://www.ftxk.cn/') 养生保健
+      a.btn(target='_blank', title='农业', style="padding-left: 5px", href='http://www.agronet.com.cn/') 农业
+      a.btn(target='_blank', title='中国蔬菜网', style="padding-left: 5px", href='http://www.vegnet.com.cn/') 中国蔬菜网
+      a.btn(target='_blank', title='加盟网', style="padding-left: 5px", href='http://www.globrand.com/') 加盟网
+      a.btn(target='_blank', title='云南花木网', style="padding-left: 5px", href='http://www.ynhmw.com') 云南花木网
+      a.btn(target='_blank', title='水果网', style="padding-left: 5px", href='http://www.miaomuzhan.com/') 苗木网
+      a.btn(target='_blank', title='养殖网', style="padding-left: 5px", href='http://www.qnong.com.cn/') 养殖网
+      a.btn(target='_blank', title='花卉网', style="padding-left: 5px", href='http://www.aihuhua.com/') 花卉网  
 

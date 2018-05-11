@@ -27,7 +27,7 @@ block content
           input.form-control(type='text', name='storehouse', placeholder='产地', value="#{item==undefined?'':item.storehouse}")
         .form-group
           label 标签
-          input.form-control(type='text', name='tags', placeholder='标签')
+          input.form-control(type='text', name='tags', placeholder='标签', value="#{item==undefined?'':item.tags.join(' ')}")
         .form-group.hidden
           label 日期
           input#dateInput(type='text', name='date')

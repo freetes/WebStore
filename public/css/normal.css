@@ -9,3 +9,15 @@ body{
   z-index: 9999;
   background-color: white;
 }
+
+a{
+  color: black
+}
+
+.itemDiv:hover {
+  border: 2px green solid
+}
+
+.btn-primary{
+  background-color: green;
+}

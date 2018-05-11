@@ -106,8 +106,13 @@ const Home = {
     if(req.session.userid == undefined || req.session.userid == null)
       Models.ItemModel.find({}, (err, items)=>{
         for(let item of items)
-          if(item.name.indexOf(req.query.name) > 0)
-            result.push(item)
+          for(let tag of item.tags)
+            if(tag.indexOf(req.query.name) == 0){
+              result.push(item)
+              break
+            }
+
+
         return res.render('search', {
           title: result.length == 0?'无结果':req.query.name,
           items,
@@ -121,8 +126,11 @@ const Home = {
         if(user.level != 2)
           Models.ItemModel.find({}, (err, items)=>{
             for(let item of items)
-              if(item.name.indexOf(req.query.name) > 0)
-                result.push(item)
+              for(let tag of item.tags)
+                if(tag.indexOf(req.query.name) == 0){
+                  result.push(item)
+                  break
+                }
             return res.render('search', {
               title: result.length == 0?'无结果':req.query.name,
               user,
@@ -137,24 +145,24 @@ const Home = {
   signinGet: (req, res)=>{
     const title = '登录'
     req.session.userid = null;
-    // buildVerifyCode(req)
+    buildVerifyCode(req)
     res.render('signin', {
       title,
-      // verifyCodeExpression: req.session.verifyExpression
+      verifyCodeExpression: req.session.verifyExpression
     });
   },
 
   // POST /signin
   signinPost: (req, res)=>{
     const title = '登录'
-    // if(req.body.verifyCode != req.session.verifyResult){
-    //   buildVerifyCode(req)
-    //   return res.render('signin',{
-    //     title,
-    //     verifyCodeExpression: req.session.verifyExpression,
-    //     message: '验证码错误，请重新输入！'
-    //   });
-    // }
+    if(req.body.verifyCode != req.session.verifyResult){
+      buildVerifyCode(req)
+      return res.render('signin',{
+        title,
+        verifyCodeExpression: req.session.verifyExpression,
+        message: '验证码错误，请重新输入！'
+      });
+    }
     Models.UserModel.findOne({'id': req.body.id}, (err, user)=>{
       if(user == null){
         return res.render('signin',{
@@ -181,14 +189,14 @@ const Home = {
   // POST /signup
   signupPost: (req, res)=>{
     const title = '登录'
-    // if(req.body.verifyCode != req.session.verifyResult){
-    //   buildVerifyCode(req)
-    //   return res.render('signin',{
-    //     title,
-    //     verifyCodeExpression: req.session.verifyExpression,
-    //     message: '验证码错误，请重新输入！'
-    //   });
-    // }
+    if(req.body.verifyCode != req.session.verifyResult){
+      buildVerifyCode(req)
+      return res.render('signin',{
+        title,
+        verifyCodeExpression: req.session.verifyExpression,
+        message: '验证码错误，请重新输入！'
+      });
+    }
     Models.UserModel.find({'id': req.body.id}, (err, user)=>{
       if(user.length != 0)
         return res.render('signin',{

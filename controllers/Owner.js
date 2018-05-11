@@ -34,9 +34,9 @@ const Owner = {
       item.tags = item.tags.split(' ')
       // Linux
       if(files.picture.name != '')
-        item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
+        // item.picture = '/tmp/' + files['picture'].path.split('/tmp/')[1]
       // windows
-      // item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
+        item.picture = '/tmp/' + files['picture'].path.split("\\tmp\\")[1]
       
       item.owner = req.session.userid
       item.isHot = false
